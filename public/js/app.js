@@ -10,14 +10,14 @@ function addNewPosition () {
   $("#addNewPositionModal").modal();
 }
 
-function saveNewPosition(){
+function saveNewPosition() {
+  var $btn = $("#btnSavePosition").button('saving');
   $.post("/positions/add", {
       name : $("#inputPositionName").val(),
-      reqLink : $("#reqLink").val()
+      reqLink : $("#inputRequisitionLink").val(),
+      description : $("#inputPositionDescription").val()
     })
     .done(function(build) {
       $btn.button('started');
     });
-
-    alert('');
 }
