@@ -131,6 +131,6 @@ var CandidateStore = module.exports = klass(function () {
     },
 
     __getPassPhrase : function () {
-      return "PhaniRaj";
+      return process.env.passPhrase;
     }
 });
