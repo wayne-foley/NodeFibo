@@ -3,7 +3,6 @@ var BaseRes = require('./base_res')
 
 var AppRes = module.exports = BaseRes.extend({
   route: function (app) {
-    app.get('/', _.bind(this.all, this));
   },
 
   all: function (req, res) {

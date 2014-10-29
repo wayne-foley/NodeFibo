@@ -1,0 +1,18 @@
+applications:
+  web:
+    name: CandidateTracker
+    framework:
+      type: node
+      runtime: node010
+    mem: 512M
+    instances: 1
+    services:
+      candidate-db:
+        type: mysql
+    stackato:
+      hooks:
+        post-staging:
+      ignores:
+        - .git
+        - .gitignore
+        - README.md
