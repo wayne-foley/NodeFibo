@@ -86,7 +86,9 @@ function downloadPassPhrase() {
 
 	if(!process.env.CryptoKey) {
 		console.log('Encryption Key location not given, cannot download encryption key!');
-		//process.exit(-1);
+		console.log('Using default key...');
+		process.env.passPhrase = "batman!";
+		return;
 	}
 	
 	var keyLocation = url.parse(process.env.CryptoKey);
