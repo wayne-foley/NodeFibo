@@ -104,10 +104,9 @@ DROP TABLE IF EXISTS `state`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `state` (
-  `StageId` int(11) NOT NULL,
+  `StateId` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(45) DEFAULT NULL,
   `Description` varchar(45) DEFAULT NULL,
-  `Candidate_CandidateId` int(11) NOT NULL,
   `Order` int(11) NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`StageId`),
   UNIQUE KEY `StageId_UNIQUE` (`StageId`),
@@ -135,7 +134,8 @@ BEGIN
 SELECT CandidateId, FirstName, LastName, TagLine, Notes, JobLink, EmailAddress, LastModified,  P.Name
 
    FROM   Candidate C
-       INNER JOIN Position P ON P.PositionID = C.Position_PositionId ;
+   INNER JOIN Position P ON P.PositionID = C.Position_PositionId 
+   INNER JOIN State S ON C.CurrentState
 
  END ;;
 DELIMITER ;
@@ -249,6 +249,39 @@ BEGIN
 
 END ;;
 DELIMITER ;
+
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `uspInsertPosition` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+
+CREATE PROCEDURE `uspChangeState` (IN pCandidateId INT, IN pStateId INT) 
+
+BEGIN
+
+ 
+ UPDATE Candidate
+ 
+ SET    CurrentStage = pStateId 
+ 
+ WHERE  CandidateId  = pCandidateId;
+     
+  
+END
+;;
+DELIMITER ;
+
+
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
