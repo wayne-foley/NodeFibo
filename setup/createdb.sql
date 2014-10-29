@@ -243,12 +243,12 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE PROCEDURE `uspInsertCandidate`(
-        IN  pFirstName                    VARCHAR(45)   ,
-        IN  pLastName                     VARCHAR(45)   ,
-        IN  pEmailAddress                 VARCHAR(45)   ,
+        IN  pFirstName                    VARCHAR(500)   ,
+        IN  pLastName                     VARCHAR(500)   ,
+        IN  pEmailAddress                 VARCHAR(500)   ,
         IN  pNotes                        VARCHAR(200)  ,
         IN  pPositionId                   INT,
-        IN  pTagLine                      VARCHAR(45)
+        IN  pTagLine                      VARCHAR(500)
 
      )
 BEGIN
@@ -271,7 +271,7 @@ BEGIN
            pNotes                        ,
            pPositionId                   ,
            pTagLine                      ,
-           0
+           1
          ) ;
 
          END ;;
@@ -291,8 +291,8 @@ DELIMITER ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
 CREATE PROCEDURE `uspInsertPosition`(
-        IN  pName                    VARCHAR(45)  ,
-        IN  pDescription             VARCHAR(45)  ,
+        IN  pName                    VARCHAR(2500)  ,
+        IN  pDescription             VARCHAR(2500)  ,
         IN  pJobLink                 VARCHAR(100)
 
      )
