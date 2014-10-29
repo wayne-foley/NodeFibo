@@ -8,7 +8,9 @@ var fs = require('fs')
   , LocalStrategy = require('passport-local').Strategy
   , session = require('express-session')
   , https = require('https')
-  , url = require('url');
+  , url = require('url')
+  , busboy = require('connect-busboy')
+  , form = require('reformed');
 
 // Config
 app.set('views', __dirname + '/app/views');
