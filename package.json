@@ -12,6 +12,7 @@
     "mysql" : "x",
     "passport" :"x",
     "express-session" :"x",
-    "passport-local" :"x"
+    "passport-local" :"x",
+    "fast-csv": "x"
   }
 }
