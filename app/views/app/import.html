@@ -2,6 +2,16 @@
   <h1> Import the Spreadsheet </h1>
 </div>
 <div class="container col-sm-8 pull-left">
+<% if(!candidates){ %>
+<div class="form-group">
+  <form action="/load" method="post" enctype="multipart/form-data">
+    <input type="file" id="csvinput" accept=".csv">
+    <p class="help-block">Please upload the current tracking spreadsheet in CSV format.</p>
+    <button type="submit" class="btn btn-default">Do it!</button>
+  </form>
+</div>
+<% } %>
+<% if(candidates){ %>
 <table class="table table-striped">
     <thead>
       <tr>
@@ -20,4 +30,5 @@
       <% }) %>
     </tbody>
   </table>
+<% } %>
 </div>
