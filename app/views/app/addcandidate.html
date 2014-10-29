@@ -1,0 +1,32 @@
+<div class ="page_header">
+  <h1> Add Candidate </h1>
+</div>
+<div class="container col-sm-6">
+<form role="form" action ="/candidate/add" method="POST">
+  <div class="form-group">
+    <label for="inputFirstName">First Name</label>
+    <input type="text" class="form-control" name="firstName" id="inputFirstName" placeholder="First Name">
+  </div>
+  <div class="form-group">
+    <label for="inputLastName">Last Name</label>
+    <input type="text" class="form-control" name="lastName" id="inputLastName" placeholder="Last Name">
+  </div>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Email address</label>
+    <input type="email" class="form-control" name ="email" id="exampleInputEmail1" placeholder="Enter email">
+  </div>
+  <div class="form-group">
+    <label for="inputTagLine">Tag Line</label>
+    <input type="text" class="form-control" name="tagLine" id="inputTagLine" placeholder="Tag Line">
+  </div>
+  <div class="form-group">
+    <label for="inputTagLine">Position</label>
+    <select id="position" name="position" class="form-control">
+      <% positions.forEach(function(position) {%>
+        <option value ="<%= position.PositionId%>"><%= position.Name%></option>
+      <%})%>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+</div>
