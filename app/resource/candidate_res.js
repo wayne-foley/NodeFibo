@@ -6,6 +6,23 @@ var CandidateRest = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/', this.ensureAuthenticated, _.bind(this.home, this));
     app.get('/login', _.bind(this.login, this));
+    app.get('/candidate/add', this.ensureAuthenticated, _.bind(this.showCandidateAdd, this));
+    app.post('/candidate/add', this.ensureAuthenticated, _.bind(this.addCandidate, this));
+  },
+
+
+  addCandidate : function (req,res) {
+    var store = new CandidateStore();
+    store.addCandidate(req.body, function (candidate) {
+      
+    });
+  },
+
+  showCandidateAdd : function (req, res) {
+    var store = new CandidateStore();
+    store.getPositions( function (positions) {
+      res.render('app/addcandidate.html' , {positions : positions.results});
+    });
   },
 
   login: function (req, res) {
