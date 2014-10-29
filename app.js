@@ -86,7 +86,7 @@ function downloadPassPhrase() {
 
 	if(!process.env.CryptoKey) {
 		console.log('Encryption Key location not given, cannot download encryption key!');
-		process.exit(-1);
+		//process.exit(-1);
 	}
 	
 	var keyLocation = url.parse(process.env.CryptoKey);
