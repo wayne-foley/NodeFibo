@@ -71,6 +71,7 @@ function bootResources(app) {
     });
   });
 }
+
 bootResources(app);
 
 if (!module.parent) {
