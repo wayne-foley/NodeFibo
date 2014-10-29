@@ -97,6 +97,10 @@ var CandidateStore = module.exports = klass(function () {
       debugger;
     },
 
+    addPosition : function(position, done) {
+      debugger;
+    },
+
     __encryptCandidate : function (candidate) {
       candidate.firstName = this.__encrypt(candidate.firstName);
       candidate.lastName = this.__encrypt(candidate.lastName);

@@ -8,13 +8,14 @@ var CandidateRest = module.exports = BaseRes.extend({
     app.get('/login', _.bind(this.login, this));
     app.get('/candidate/add', this.ensureAuthenticated, _.bind(this.showCandidateAdd, this));
     app.post('/candidate/add', this.ensureAuthenticated, _.bind(this.addCandidate, this));
+    app.post('/positions/add', this.ensureAuthenticated, _.bind(this.addNewPosition, this));
   },
 
 
   addCandidate : function (req,res) {
     var store = new CandidateStore();
     store.addCandidate(req.body, function (candidate) {
-      
+
     });
   },
 
@@ -27,6 +28,10 @@ var CandidateRest = module.exports = BaseRes.extend({
 
   login: function (req, res) {
     res.render('app/login');
+  },
+
+  addNewPosition : function (req, res) {
+
   },
 
   home : function (req,res) {
@@ -44,12 +49,10 @@ var CandidateRest = module.exports = BaseRes.extend({
         });
       }
 
-      debugger;
       grouped = _.sortBy (results, function (group) {
         return group.candidates[0].state.order;
       });
 
-      debugger;
       res.render('app/home' , { candidates : grouped});
     });
   },
