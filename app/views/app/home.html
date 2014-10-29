@@ -1,0 +1,48 @@
+<div class ="page_header">
+  <h1> Candidate Tracking System </h1>
+</div>
+<div class="container col-sm-8 pull-left">
+  <% candidates.forEach(function(state){ %>
+    <div class="row container">
+        <div class="col-sm-8">
+        <h2><%= state.name%></h2>
+        <div class="well">
+        <% state.candidates.forEach( function (candidate) {%>
+          <div class="row">
+              <div class="col-sm-4">
+                  <h4><%=candidate.name%></h4>
+              </div>
+              <div class="col-sm-2 pull-right">
+                <a href="#"> Next Step </a>
+              </div>
+          </div>
+        <%})%>
+      </div>
+      </div>
+    </div>
+  <%})%>
+</div>
+
+<div class="container col-sm-4 pull-right border">
+  <% candidates.forEach(function(state){ %>
+    <div class="row">
+        <div class="col-sm-4">
+            <i class="glyphicon glyph<%= state.icon%>"></i>
+            <%= state.name%> (<%= state.candidates.length%>)
+        </div>
+        <div class="col-sm-6">
+            <div class="progress">
+              <div class="progress-bar progress-bar-success" style="width: 35%">
+                <span class="sr-only">35% Complete (success)</span>
+              </div>
+              <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
+                <span class="sr-only">20% Complete (warning)</span>
+              </div>
+              <div class="progress-bar progress-bar-danger" style="width: 45%">
+                <span class="sr-only">10% Complete (danger)</span>
+              </div>
+            </div>
+        </div>
+    </div>
+  <% }) %>
+</div>

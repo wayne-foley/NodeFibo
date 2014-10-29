@@ -8,6 +8,10 @@
     "vows": "0.x.x",
     "cluster": "0.x.x",
     "express": "2.x.x",
-    "ejs": "0.x.x"
+    "ejs": "0.x.x",
+    "mysql" : "x",
+    "passport" :"x",
+    "express-session" :"x",
+    "passport-local" :"x"
   }
 }

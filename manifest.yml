@@ -1,0 +1,19 @@
+applications:
+- name: CandidateTrack
+  mem: 256M
+  instances: 1
+  services:
+    candidate-db:
+      type: mysql
+  stackato:
+    hooks:
+      post-staging:
+    ignores:
+    - .git
+    - .venv
+    - .gitignore
+    - devsetup.sh
+    - README.md
+    env:
+      GITHUB_CLIENT_ID: "d9183fb93eefac0a21da"
+      GITHUB_CLIENT_SECRET: "aa49cba6c09d6136977da4b50bc9a52d8588aa7d"
