@@ -4,18 +4,41 @@ var BaseRes = require('./base_res')
 
 var CandidateRest = module.exports = BaseRes.extend({
   route: function (app) {
-    app.get('/', _.bind(this.home, this));
+    app.get('/', this.ensureAuthenticated, _.bind(this.home, this));
+    app.get('/login', _.bind(this.login, this));
   },
 
-  all: function (req, res) {
-    res.render('app/index');
+  login: function (req, res) {
+    res.render('app/login');
   },
 
   home : function (req,res) {
     var store = new CandidateStore();
     store.getCandidates( function (candidates) {
+      var grouped = _.groupBy(candidates.results , function (can) {
+        return  can.state.name;
+      });
+
+      var results = [];
+      for(var state in grouped) {
+        results.push({
+          name : state,
+          candidates : grouped[state]
+        });
+      }
+
       debugger;
-      res.render('app/home' , { candidates : candidates.results});
+      grouped = _.sortBy (results, function (group) {
+        return group.candidates[0].state.order;
+      });
+
+      debugger;
+      res.render('app/home' , { candidates : grouped});
     });
+  },
+
+  ensureAuthenticated : function(req, res, next) {
+    if (req.isAuthenticated()) { return next(); }
+    res.redirect('/login')
   }
 });
