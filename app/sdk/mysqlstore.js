@@ -28,7 +28,7 @@ var MySqlStore = module.exports = klass(function () {
     });
   },
 
-  callStoredProcedude : function(procedureName, done) {
+  callStoredProcedure : function(procedureName, done) {
     this.runQuery(" call "+procedureName, function(err,results) {
 
         var sanitized = results;
@@ -65,7 +65,7 @@ var MySqlStore = module.exports = klass(function () {
 
     if(process.env.STACKATO_SERVICES) {
       var connection = JSON.parse(process.env.STACKATO_SERVICES);
-      var dbConnection =  connection['helionci-db'];
+      var dbConnection =  connection['hpcloudrecruiting-db'];
       return {
         host: dbConnection.host,
         port : dbConnection.port,
@@ -80,7 +80,7 @@ var MySqlStore = module.exports = klass(function () {
         port : 3306,
         user : 'cisystem',
         password: 'fairgate',
-        database : 'users'
+        database : 'hpcloudrecruiting'
       };
     }
   }

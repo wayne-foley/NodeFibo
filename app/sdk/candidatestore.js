@@ -94,11 +94,11 @@ var CandidateStore = module.exports = klass(function () {
     },
 
     addCandidate : function(candidate, done) {
-      debugger;
+      done();
     },
 
     addPosition : function(position, done) {
-      debugger;
+      done();
     },
 
     __encryptCandidate : function (candidate) {

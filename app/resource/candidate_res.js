@@ -1,6 +1,6 @@
 var BaseRes = require('./base_res')
   , _ = require('underscore')
-  , CandidateStore = require('../sdk/candidatestore.js')
+  , CandidateStore = require('../sdk/sqlcandidatestore.js')
   , csv = require('fast-csv')
   , fs = require('fs');
 
@@ -20,7 +20,7 @@ var CandidateRest = module.exports = BaseRes.extend({
   addCandidate : function (req,res) {
     var store = new CandidateStore();
     store.addCandidate(req.body, function (candidate) {
-
+      res.redirect('/');
     });
   },
 
@@ -34,7 +34,7 @@ var CandidateRest = module.exports = BaseRes.extend({
   login: function (req, res) {
     res.render('app/login');
   },
-  
+
   upload: function (req, res) {
 	res.render('app/import');
   },
@@ -47,10 +47,10 @@ var CandidateRest = module.exports = BaseRes.extend({
   },
 
   load: function (req, res){
-	
-	
-	
-	
+
+
+
+
 	var store = new CandidateStore();
     store.getCandidates( function (candidates) {
       var grouped = _.groupBy(candidates.results , function (can) {
@@ -77,7 +77,8 @@ var CandidateRest = module.exports = BaseRes.extend({
 
   home : function (req,res) {
     var store = new CandidateStore();
-    store.getCandidates( function (candidates) {
+    store.getCandidates( function (err, candidates) {
+      debugger;
       var grouped = _.groupBy(candidates.results , function (can) {
         return  can.state.name;
       });
