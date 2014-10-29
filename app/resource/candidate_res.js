@@ -1,37 +1,57 @@
 var BaseRes = require('./base_res')
   , _ = require('underscore')
-  , CandidateStore = require('../sdk/candidatestore.js');
+  , CandidateStore = require('../sdk/candidatestore.js')
+  , csv = require('fast-csv')
+  , fs = require('fs');
 
 var CandidateRest = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/', this.ensureAuthenticated, _.bind(this.home, this));
     app.get('/login', _.bind(this.login, this));
-    app.get('/load', this.ensureAuthenticated, _.bind(this.load, this));
+    //app.post('/load', this.ensureAuthenticated, _.bind(this.load, this));
+	app.post('/load', _.bind(this.load, this));
+	app.get('/import', this.ensureAuthenticated, _.bind(this.upload, this));
     app.get('/candidate/add', this.ensureAuthenticated, _.bind(this.showCandidateAdd, this));
     app.post('/candidate/add', this.ensureAuthenticated, _.bind(this.addCandidate, this));
+    app.post('/positions/add', this.ensureAuthenticated, _.bind(this.addNewPosition, this));
   },
 
 
   addCandidate : function (req,res) {
     var store = new CandidateStore();
     store.addCandidate(req.body, function (candidate) {
-      
+
     });
   },
 
   showCandidateAdd : function (req, res) {
     var store = new CandidateStore();
     store.getPositions( function (positions) {
-      res.render('app/addcandidate.html' , {positions : positions.results});
+      res.render('app/addcandidate' , {positions : positions.results});
     });
   },
 
   login: function (req, res) {
     res.render('app/login');
   },
+  
+  upload: function (req, res) {
+	res.render('app/import');
+  },
+
+  addNewPosition : function (req, res) {
+    var store = new CandidateStore();
+    store.addPosition(req.body, function (position) {
+      res.json(position);
+    });
+  },
 
   load: function (req, res){
-    var store = new CandidateStore();
+	
+	
+	
+	
+	var store = new CandidateStore();
     store.getCandidates( function (candidates) {
       var grouped = _.groupBy(candidates.results , function (can) {
         return  can.state.name;
@@ -70,12 +90,10 @@ var CandidateRest = module.exports = BaseRes.extend({
         });
       }
 
-      debugger;
       grouped = _.sortBy (results, function (group) {
         return group.candidates[0].state.order;
       });
 
-      debugger;
       res.render('app/home' , { candidates : grouped});
     });
   },

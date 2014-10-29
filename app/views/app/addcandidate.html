@@ -25,8 +25,47 @@
       <% positions.forEach(function(position) {%>
         <option value ="<%= position.PositionId%>"><%= position.Name%></option>
       <%})%>
+      <option value ="new">Add New</option>
     </select>
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
+
+
+<!-- Modal dialog to add positions -->
+<div class="modal" id="addNewPositionModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title">Add New Position</h4>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label for="inputPositionName">Position Name</label>
+          <input type="text" class="form-control" name="positionName" id="inputPositionName" placeholder="Position Name">
+        </div>
+          <div class="form-group">
+            <label for="inputPositionDescription">Description</label>
+            <input type="text" class="form-control" name="description" id="inputPositionDescription" placeholder="Description">
+          </div>
+        <div class="form-group">
+          <label for="inputRequisitionLink">Requisition Link</label>
+          <input type="text" class="form-control" name="reqLink" id="inputRequisitionLink" placeholder="Link to Requisition">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" id="btnSavePosition" data-saving-text="Saving..." class="btn btn-primary">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript">
+$(function () {
+  $("#position").change(onPositionChanged);
+  $("#btnSavePosition").click(saveNewPosition);
+});
+</script>
