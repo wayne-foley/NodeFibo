@@ -36,7 +36,7 @@ var CandidateRest = module.exports = BaseRes.extend({
   },
   
   upload: function (req, res) {
-	res.render('app/import');
+	res.render('app/import', {candidates : null});
   },
 
   addNewPosition : function (req, res) {
