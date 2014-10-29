@@ -6,6 +6,7 @@ var CandidateRest = module.exports = BaseRes.extend({
   route: function (app) {
     app.get('/', this.ensureAuthenticated, _.bind(this.home, this));
     app.get('/login', _.bind(this.login, this));
+    app.get('/load', this.ensureAuthenticated, _.bind(this.load, this));
     app.get('/candidate/add', this.ensureAuthenticated, _.bind(this.showCandidateAdd, this));
     app.post('/candidate/add', this.ensureAuthenticated, _.bind(this.addCandidate, this));
     app.post('/positions/add', this.ensureAuthenticated, _.bind(this.addNewPosition, this));
@@ -22,7 +23,7 @@ var CandidateRest = module.exports = BaseRes.extend({
   showCandidateAdd : function (req, res) {
     var store = new CandidateStore();
     store.getPositions( function (positions) {
-      res.render('app/addcandidate.html' , {positions : positions.results});
+      res.render('app/addcandidate' , {positions : positions.results});
     });
   },
 
@@ -31,7 +32,35 @@ var CandidateRest = module.exports = BaseRes.extend({
   },
 
   addNewPosition : function (req, res) {
+    var store = new CandidateStore();
+    store.addPosition(req.body, function (position) {
+      res.json(position);
+    });
+  },
 
+  load: function (req, res){
+    var store = new CandidateStore();
+    store.getCandidates( function (candidates) {
+      var grouped = _.groupBy(candidates.results , function (can) {
+        return  can.state.name;
+      });
+
+      var results = [];
+      for(var state in grouped) {
+        results.push({
+          name : state,
+          candidates : grouped[state]
+        });
+      }
+
+      debugger;
+      grouped = _.sortBy (results, function (group) {
+        return group.candidates[0].state.order;
+      });
+
+      debugger;
+      res.render('app/import' , { candidates : grouped});
+    });
   },
 
   home : function (req,res) {
