@@ -6,7 +6,9 @@ var fs = require('fs')
   , app = express.createServer()
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
-  , session = require('express-session');
+  , session = require('express-session')
+  , https = require('https')
+  , url = require('url');
 
 // Config
 app.set('views', __dirname + '/app/views');
@@ -75,8 +77,42 @@ function bootResources(app) {
 bootResources(app);
 
 if (!module.parent) {
+  downloadPassPhrase();
   app.listen(PORT);
   console.log('App started on port: ' + PORT);
+}
+	
+function downloadPassPhrase() {
+
+	if(!process.env.CryptoKey) {
+		console.log('Encryption Key location not given, cannot download encryption key!');
+		process.exit(-1);
+	}
+	
+	var keyLocation = url.parse(process.env.CryptoKey);
+	
+	var options = {
+		host: keyLocation.host,
+		port: keyLocation.port,
+		path: keyLocation.path
+	};
+
+	https.get(options, function(resp){
+		console.log('Downloading encryption key...');
+		var data = '';
+		
+		resp.on('data', function(chunk){
+			data += chunk;
+		});
+		
+		resp.on('end', function() {
+			process.env.passPhrase = data;
+			console.log('Encryption key downloaded');
+		});
+		
+	}).on("error", function(e){
+		console.log("Encryption key could not be downloaded: " + e.message);
+	});
 }
 
 module.exports = app;
