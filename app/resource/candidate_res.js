@@ -1,6 +1,6 @@
 var BaseRes = require('./base_res')
   , _ = require('underscore')
-  , CandidateStore = require('../sdk/candidatestore.js');
+  , CandidateStore = require('../sdk/sqlcandidatestore.js');
 
 var CandidateRest = module.exports = BaseRes.extend({
   route: function (app) {
@@ -16,7 +16,7 @@ var CandidateRest = module.exports = BaseRes.extend({
   addCandidate : function (req,res) {
     var store = new CandidateStore();
     store.addCandidate(req.body, function (candidate) {
-
+      res.redirect('/');
     });
   },
 
@@ -65,7 +65,8 @@ var CandidateRest = module.exports = BaseRes.extend({
 
   home : function (req,res) {
     var store = new CandidateStore();
-    store.getCandidates( function (candidates) {
+    store.getCandidates( function (err, candidates) {
+      debugger;
       var grouped = _.groupBy(candidates.results , function (can) {
         return  can.state.name;
       });
