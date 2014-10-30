@@ -18,6 +18,6 @@ function saveNewPosition() {
       description : $("#inputPositionDescription").val()
     })
     .done(function(build) {
-      $btn.button('started');
+      $('#addNewPositionModal').modal('hide');
     });
 }
