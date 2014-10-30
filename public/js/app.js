@@ -31,5 +31,6 @@ function saveState() {
     })
     .done(function(build) {
       $('#changeStateModel').modal('hide');
+      document.location = "/";
     });
 }
