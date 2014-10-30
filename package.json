@@ -15,6 +15,7 @@
     "passport-local" :"x",
 	"fast-csv" :"x",
 	"connect-busboy" :"x",
-	"reformed" :"x"
+	"reformed" :"x",
+	"keen.io" :"x"
   }
 }
