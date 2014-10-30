@@ -16,7 +16,7 @@
                       <span class="text-muted"><%=candidate.tagLine%></span>
                     </div>
                 <div class="col-sm-2 pull-right">
-                  <a id="movelink" style="cursor:pointer"> Move </a>
+                  <a class="movelink" style="cursor:pointer"> Move </a>
                 </div>
               </div>
           </div>
@@ -112,7 +112,7 @@
 </div><!-- /.modal -->
 <script type="text/javascript">
 $(function () {
-  $("#movelink").click(function(e){
+  $(".movelink").click(function(e){
     var parent_id = $(this).closest(".candidateRow").attr("input_id");
     var old_state_id = $(this).closest(".state").attr("input_id");
     $("#stage_value").val(old_state_id);
