@@ -80,7 +80,7 @@ var MySqlStore = module.exports = klass(function () {
         port : 3306,
         user : 'cisystem',
         password: 'fairgate',
-        database : 'helionize'
+        database : 'hpcloudrecruiting'
       };
     }
   }
