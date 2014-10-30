@@ -13,6 +13,10 @@ var SQLCandidateStore = module.exports = klass(function () {
       sqlStore.callStoredProcedure('uspGetCandidates' , function (err, encryptedResults) {
         var results = [];
         _.each(encryptedResults, function(res,index) {
+            res.state = {
+              name : res.State_Name,
+              order : res.State_Order
+            };
             results.push(self.__decryptCandidate(res));
           });
 
@@ -22,15 +26,11 @@ var SQLCandidateStore = module.exports = klass(function () {
 
 
     getPositions  : function (done) {
-      done(
-        { results : [
-          { PositionId : 0 , Name :"Program Manager"},
-          { PositionId : 1 , Name :"Senior SDE"},
-          { PositionId : 2 , Name :"Distinguished Technologist"},
-          { PositionId : 3 , Name :"Technical Fellow"},
-         ]
-      }
-      );
+      var sqlStore = new MySqlStore(),
+        self = this;
+        sqlStore.callStoredProcedure("uspGetPositions", function (err, positions) {
+          done(err, positions);
+        });
     },
 
     addCandidate : function(candidate, done) {
@@ -55,7 +55,17 @@ var SQLCandidateStore = module.exports = klass(function () {
     },
 
     addPosition : function(position, done) {
-      done();
+      var sqlStore = new MySqlStore(),
+      self = this;
+      sqlStore.callStoredProcedure("uspInsertPosition("
+        +"'"+position.name+"', "
+        +"'"+position.description+"' ,"
+        +"'"+position.reqLink+"'"
+        +")",
+        function (err, results) {
+          debugger;
+          done(err, { results : results});
+        });
     },
 
     __encryptCandidate : function (candidate) {

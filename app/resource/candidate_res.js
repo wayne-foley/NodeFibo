@@ -26,8 +26,9 @@ var CandidateRest = module.exports = BaseRes.extend({
 
   showCandidateAdd : function (req, res) {
     var store = new CandidateStore();
-    store.getPositions( function (positions) {
-      res.render('app/addcandidate' , {positions : positions.results});
+    store.getPositions( function (err, positions) {
+      debugger;
+      res.render('app/addcandidate' , {positions : positions});
     });
   },
 
@@ -47,32 +48,21 @@ var CandidateRest = module.exports = BaseRes.extend({
   },
 
   load: function (req, res){
+	console.log(req.files);
+	
+	
+	var stream = fs.createReadStream(req.files.csvinput.path);
+	
+	csv.fromStream(stream, {headers : true})
+		.on("data", function(data){
+			console.log(data);
+			
+		})
+		.on("end", function(){
+			console.log("done");
+		});
 
-
-
-
-	var store = new CandidateStore();
-    store.getCandidates( function (candidates) {
-      var grouped = _.groupBy(candidates.results , function (can) {
-        return  can.state.name;
-      });
-
-      var results = [];
-      for(var state in grouped) {
-        results.push({
-          name : state,
-          candidates : grouped[state]
-        });
-      }
-
-      debugger;
-      grouped = _.sortBy (results, function (group) {
-        return group.candidates[0].state.order;
-      });
-
-      debugger;
-      res.render('app/import' , { candidates : grouped});
-    });
+      res.render('app/import');
   },
 
   home : function (req,res) {
