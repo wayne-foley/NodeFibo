@@ -22,6 +22,7 @@
   <div class="form-group">
     <label for="inputTagLine">Position</label>
     <select id="position" name="position" class="form-control">
+      <option value ="choose"> === Choose a Position === </option>
       <% positions.forEach(function(position) {%>
         <option value ="<%= position.PositionId%>"><%= position.Name%></option>
       <%})%>

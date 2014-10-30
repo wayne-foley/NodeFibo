@@ -26,8 +26,9 @@ var CandidateRest = module.exports = BaseRes.extend({
 
   showCandidateAdd : function (req, res) {
     var store = new CandidateStore();
-    store.getPositions( function (positions) {
-      res.render('app/addcandidate' , {positions : positions.results});
+    store.getPositions( function (err, positions) {
+      debugger;
+      res.render('app/addcandidate' , {positions : positions});
     });
   },
 

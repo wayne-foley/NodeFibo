@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.21, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.6.20, for osx10.9 (x86_64)
 --
 -- Host: localhost    Database: hpcloudrecruiting
 -- ------------------------------------------------------
--- Server version	5.6.21-log
+-- Server version	5.6.20
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -36,7 +36,7 @@ CREATE TABLE `candidate` (
   UNIQUE KEY `CandidateId_UNIQUE` (`CandidateId`),
   KEY `fk_Candidate_Position1_idx` (`Position_PositionId`),
   CONSTRAINT `fk_Candidate_Position1` FOREIGN KEY (`Position_PositionId`) REFERENCES `position` (`PositionId`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -45,6 +45,7 @@ CREATE TABLE `candidate` (
 
 LOCK TABLES `candidate` WRITE;
 /*!40000 ALTER TABLE `candidate` DISABLE KEYS */;
+INSERT INTO `candidate` VALUES (2,'0fb6d630bdaab39046220e2c3f081850','396676538b44cdd273f3c9e28afee1d7','5adb166912602d7eefdd8323d0531965','7a59e559ead4d385ed4598308e8e40712c5bb743766f485417b78d6e99c698a7',2,1,'2014-10-29 16:55:42','5adb166912602d7eefdd8323d0531965'),(3,'c1b90745c5a5dc9d717287a45ba97ee7','c1b90745c5a5dc9d717287a45ba97ee7','41fa139727776999f6193211e48ca5d3','707e47db3639a3c79e94ba7ce54d960b5cfa19d211d26d3a39bb43ab6393c0ea',3,1,'2014-10-29 16:58:10','41fa139727776999f6193211e48ca5d3');
 /*!40000 ALTER TABLE `candidate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -95,8 +96,18 @@ CREATE TABLE `position` (
   `JobLink` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`PositionId`),
   UNIQUE KEY `Id_UNIQUE` (`PositionId`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `position`
+--
+
+LOCK TABLES `position` WRITE;
+/*!40000 ALTER TABLE `position` DISABLE KEYS */;
+INSERT INTO `position` VALUES (2,'Senior SDE','Senior SDE','2014-10-29 16:46:31','Senior SDE'),(3,'Distinguished Technologist','Distinguished Technologist','2014-10-29 16:57:38','Distinguished Technologist Link');
+/*!40000 ALTER TABLE `position` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `role`
@@ -115,6 +126,15 @@ CREATE TABLE `role` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Dumping data for table `role`
+--
+
+LOCK TABLES `role` WRITE;
+/*!40000 ALTER TABLE `role` DISABLE KEYS */;
+/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `state`
 --
 
@@ -125,12 +145,11 @@ CREATE TABLE `state` (
   `StageId` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(5000) DEFAULT NULL,
   `Description` varchar(5000) DEFAULT NULL,
-  `Candidate_CandidateId` int(11) NOT NULL,
   `Order` int(11) NOT NULL,
   PRIMARY KEY (`StageId`),
   UNIQUE KEY `StageId_UNIQUE` (`StageId`),
   UNIQUE KEY `Order_UNIQUE` (`Order`)
-  ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -139,6 +158,7 @@ CREATE TABLE `state` (
 
 LOCK TABLES `state` WRITE;
 /*!40000 ALTER TABLE `state` DISABLE KEYS */;
+INSERT INTO `state` VALUES (1,'Lead','Candidaate entered into the system',1),(2,'Phone Screen','Candidaate entered into the system',2),(3,'Interview','Candidaate entered into the system',3),(4,'Offer','Candidaate entered into the system',4),(5,'Accepted','Candidaate entered into the system',5),(6,'Withdrawn','Candidaate entered into the system',6),(7,'Rejected','Candidaate entered into the system',7);
 /*!40000 ALTER TABLE `state` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -155,7 +175,7 @@ UNLOCK TABLES;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE  PROCEDURE `uspChangeState`(IN pCandidateId INT, IN pStateId INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uspChangeState`(IN pCandidateId INT, IN pStateId INT)
 BEGIN
 
 
@@ -185,14 +205,15 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `uspGetCandidates`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uspGetCandidates`()
 BEGIN
 
- SELECT CandidateId, FirstName, LastName, TagLine, Notes,  DateJobLink, EmailAddress, LastModified,  P.Name
-   FROM   Candidate C
-       INNER JOIN Position P ON P.PositionID = C.Position_PositionId ;
+ SELECT CandidateId, FirstName, LastName, TagLine, Notes, JobLink, EmailAddress, LastModified,  P.Name,
+	S.name as 'State_Name', S.Order as 'State_Order'
+   FROM   Candidate C, state S, Position P
+Where C.CurrentStage = S.StageId and C.Position_PositionId = P.PositionId ;
  END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -209,7 +230,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `uspGetPositions`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uspGetPositions`()
 BEGIN
 
        SELECT `position`.`PositionId`,
@@ -240,15 +261,15 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `uspInsertCandidate`(
-        IN  pFirstName                    VARCHAR(500)   ,
-        IN  pLastName                     VARCHAR(500)   ,
-        IN  pEmailAddress                 VARCHAR(500)   ,
-        IN  pNotes                        VARCHAR(200)  ,
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uspInsertCandidate`(
+        IN  pFirstName                    VARCHAR(2500)   ,
+        IN  pLastName                     VARCHAR(2500)   ,
+        IN  pEmailAddress                 VARCHAR(2500)   ,
+        IN  pNotes                        VARCHAR(2000)  ,
         IN  pPositionId                   INT,
-        IN  pTagLine                      VARCHAR(500)
+        IN  pTagLine                      VARCHAR(2500)
 
      )
 BEGIN
@@ -288,9 +309,9 @@ DELIMITER ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE PROCEDURE `uspInsertPosition`(
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uspInsertPosition`(
         IN  pName                    VARCHAR(2500)  ,
         IN  pDescription             VARCHAR(2500)  ,
         IN  pJobLink                 VARCHAR(100)
@@ -307,9 +328,11 @@ BEGIN
     VALUES
          (
            pName                    ,
-           pDecription              ,
+           pDescription              ,
            pJobLink
          )  ;
+
+Select * from Position where PositionId = Last_Insert_Id();
 
 END ;;
 DELIMITER ;
@@ -327,4 +350,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-10-29 18:11:31
+-- Dump completed on 2014-10-29 17:01:27
