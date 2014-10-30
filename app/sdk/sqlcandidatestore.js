@@ -62,6 +62,22 @@ var SQLCandidateStore = module.exports = klass(function () {
       });
     },
 
+    changeCandidateState : function(candidate, done) {
+      var sqlStore = new MySqlStore(),
+      self = this;
+      sqlStore.callStoredProcedure("uspChangeState("
+        +"'"+candidate.id+"', "
+        +"'"+candidate.stateId+"'"
+      +")" , function (err, encryptedResults) {
+        var results = [];
+        _.each(encryptedResults, function(res,index) {
+            results.push(self.__decryptCandidate(res));
+          });
+
+        done(err,{ results : results});
+      });
+    },
+
     addPosition : function(position, done) {
       var sqlStore = new MySqlStore(),
       self = this;
