@@ -21,3 +21,15 @@ function saveNewPosition() {
       $('#addNewPositionModal').modal('hide');
     });
 }
+
+function saveState() {
+  var $btn = $("#btnSaveStage").button('saving');
+  $.post("/candidate/changestate", {
+      id : $("#candidate_value").val(),
+      stateId : $("#stage_value").val(),
+      
+    })
+    .done(function(build) {
+      $('#changeStateModel').modal('hide');
+    });
+}
