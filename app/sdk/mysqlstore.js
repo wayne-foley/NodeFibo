@@ -78,8 +78,8 @@ var MySqlStore = module.exports = klass(function () {
       return {
         host : 'localhost',
         port : 3306,
-        user : 'sam',
-        password: 'fairgate',
+        user : 'tracker',
+        password: 'password',
         database : 'hpcloudrecruiting'
       };
     }
