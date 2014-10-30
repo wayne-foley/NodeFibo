@@ -85,7 +85,12 @@ var CandidateRest = module.exports = BaseRes.extend({
         return group.candidates[0].state.order;
       });
 
-      res.render('app/home' , { candidates : grouped});
+      store.getStates( function (err, states) {
+        var all_states = states;
+        res.render('app/home' , { candidates : grouped, all_states : all_states});
+      });
+
+      
     });
   },
 

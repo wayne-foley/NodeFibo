@@ -33,6 +33,14 @@ var SQLCandidateStore = module.exports = klass(function () {
         });
     },
 
+    getStates  : function (done) {
+      var sqlStore = new MySqlStore(),
+        self = this;
+        sqlStore.callStoredProcedure("uspGetStates", function (err, states) {
+          done(err, states);
+        });
+    },
+
     addCandidate : function(candidate, done) {
       var encryptedCandidate = this.__encryptCandidate(candidate);
       var sqlStore = new MySqlStore(),
