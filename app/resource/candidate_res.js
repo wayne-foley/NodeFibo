@@ -48,8 +48,11 @@ var CandidateRest = module.exports = BaseRes.extend({
   },
 
   load: function (req, res){
+	console.log(req.files);
+	
 	
 	var stream = fs.createReadStream(req.files.csvinput.path);
+	
 	csv.fromStream(stream, {headers : true})
 		.on("data", function(data){
 			console.log(data);
@@ -60,7 +63,6 @@ var CandidateRest = module.exports = BaseRes.extend({
 		});
 
       res.render('app/import');
-    });
   },
 
   home : function (req,res) {

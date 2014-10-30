@@ -78,9 +78,15 @@ var MySqlStore = module.exports = klass(function () {
       return {
         host : 'localhost',
         port : 3306,
+<<<<<<< Updated upstream
         user : 'cisystem',
         password: 'fairgate',
         database : 'hpcloudrecruiting'
+=======
+        user : 'tracker',
+        password: 'password',
+        database : 'helionize'
+>>>>>>> Stashed changes
       };
     }
   }
