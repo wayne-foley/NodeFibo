@@ -30,7 +30,7 @@ var funnel = new Keen.Query('funnel', {
       actor_property: "CanidateId"
     }
   ],
-  timeframe: "this_6_months"
+  timeframe: ""
 });
 
 console.log(funnel);

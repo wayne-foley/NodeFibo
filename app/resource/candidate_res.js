@@ -1,6 +1,7 @@
 var BaseRes = require('./base_res')
   , _ = require('underscore')
   , CandidateStore = require('../sdk/sqlcandidatestore.js')
+  , KeenStore = require('../sdk/keenstore.js')
   , csv = require('fast-csv')
   , fs = require('fs');
 
@@ -101,12 +102,17 @@ var CandidateRest = module.exports = BaseRes.extend({
         return group.candidates[0].state.order;
       });
 
-      store.getStates( function (err, states) {
-        var all_states = states;
-        res.render('app/home' , { candidates : grouped, all_states : all_states});
+      var keenStore = new KeenStore();
+      keenStore.getOverallStageFunnel(function(data) {
+        var overallStats = data;
+        keenStore.getWeeklyStageFunnel(function(data) {
+          var weeklyStats = data;
+          store.getStates( function (err, states) {
+            var all_states = states;
+            res.render('app/home' , { candidates : grouped, all_states : all_states, overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
+          });
+        });
       });
-
-      
     });
   },
 

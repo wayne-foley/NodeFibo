@@ -6,21 +6,24 @@ var KeenStore = module.exports = klass(function () {
 
   // constructor
 }).methods({
-    getOverallStageFunnel : function (done) {
-      var client = this.__configureClient();
-      var definition = this.__getFunnelDefinition();
 
+    getOverallStageFunnel : function (done) {
+      this.__getFunnelData("",done);
+    },
+
+    getWeeklyStageFunnel : function (done) {
+      this.__getFunnelData("this_7_days",done);
+    },
+
+    __getFunnelData : function (timeframe, done) {
+      var client = this.__configureClient();
+      var definition = this.__getFunnelDefinition(timeframe);
+
+      self = this;
       client.run(definition, function(err, response) {
         if (err) return done([]);
-        var priorStep = response.result[0];
-        var steps = [100];
-        var trans = response.result.slice(1);
-        trans.forEach(function(value) {
-          var percent = (value/priorStep) * 100;
-          steps.push(percent);
-          priorStep = value;
-        });
-        done(steps);
+        var steps = self.__aggFunnelData(response.result);
+        done({ funnel : response.result, aggragate : steps});
       });
     },
 
@@ -66,7 +69,19 @@ var KeenStore = module.exports = klass(function () {
       return { "canidate_withdrawn" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
     },
 
-    __getFunnelDefinition  : function () {
+    __aggFunnelData : function(data) {
+        var priorStep = data[0];
+        var steps = [100];
+        var trans = data.slice(1);
+        trans.forEach(function(value) {
+          var percent = (value/priorStep) * 100;
+          steps.push(percent);
+          priorStep = value;
+        });
+        return steps;
+    },
+
+    __getFunnelDefinition  : function (timeframe) {
       var funnel = new Keen.Query('funnel', {
         steps: [
           {
@@ -90,7 +105,7 @@ var KeenStore = module.exports = klass(function () {
             actor_property: "CanidateId"
           }
         ],
-        timeframe: "this_6_months"
+        timeframe: timeframe
       });
       return funnel;
     },
