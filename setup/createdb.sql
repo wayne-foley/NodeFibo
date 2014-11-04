@@ -261,6 +261,20 @@ END ;;
 
 DELIMITER ;
 
+DROP PROCEDURE IF EXISTS `uspGetPersons`;
+
+DELIMITER ;;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uspGetPersons`()
+BEGIN
+
+ SELECT PersonId, FirstName, LastName, EmailAddress, R.Name AS 'Role_Name', R.RoleId AS 'RoleId'
+   FROM   Person P
+   INNER JOIN Role R ON R.RoleId = P.Role_RoleId;
+END ;;
+
+DELIMITER ;
+
 DROP PROCEDURE IF EXISTS `uspGetPositions`;
 
 DELIMITER ;;

@@ -41,6 +41,22 @@ var SQLCandidateStore = module.exports = klass(function () {
         });
     },
 
+    getRecruiters  : function (done) {
+      var sqlStore = new MySqlStore(),
+        self = this;
+        sqlStore.callStoredProcedure("uspGetRecruiters", function (err, states) {
+          done(err, states);
+        });
+    },
+
+    getPersons  : function (done) {
+      var sqlStore = new MySqlStore(),
+        self = this;
+        sqlStore.callStoredProcedure("uspGetPersons", function (err, states) {
+          done(err, states);
+        });
+    },
+
     addCandidate : function(candidate, done) {
       var encryptedCandidate = this.__encryptCandidate(candidate);
       var sqlStore = new MySqlStore(),
@@ -51,8 +67,8 @@ var SQLCandidateStore = module.exports = klass(function () {
         +"'"+encryptedCandidate.email+"', "
         +"'"+encryptedCandidate.tagLine+"', "
         +"'"+encryptedCandidate.position+"', "
-        +"'"+encryptedCandidate.recruiterId+"', "
-        +"'"+encryptedCandidate.ownerId+"', "
+        +"'"+encryptedCandidate.recruiter+"', "
+        +"'"+encryptedCandidate.owner+"', "
         +"'"+encryptedCandidate.tagLine+"'"
       +")" , function (err, encryptedResults) {
         var results = [];
@@ -101,12 +117,7 @@ var SQLCandidateStore = module.exports = klass(function () {
       var keenStore = new KeenStore();
       var msg = {};
 
-      console.log("WF");
-      console.log(results);
-      console.log("FW");
-
       _.each(results, function(res,index) {
-            //for each result, send msg
             var msg = {};
             switch(res.StageId) {
               case 1:
