@@ -1,5 +1,6 @@
 var klass = require('klass')
   , MySqlStore = require('./mysqlstore')
+  , KeenStore = require('./keenstore')
   , _ = require('underscore')
   , crypto = require('crypto');
 
@@ -23,7 +24,6 @@ var SQLCandidateStore = module.exports = klass(function () {
         done(err,{ results : results});
       });
     },
-
 
     getPositions  : function (done) {
       var sqlStore = new MySqlStore(),
@@ -51,6 +51,8 @@ var SQLCandidateStore = module.exports = klass(function () {
         +"'"+encryptedCandidate.email+"', "
         +"'"+encryptedCandidate.tagLine+"', "
         +"'"+encryptedCandidate.position+"', "
+        +"'"+encryptedCandidate.recruiterId+"', "
+        +"'"+encryptedCandidate.ownerId+"', "
         +"'"+encryptedCandidate.tagLine+"'"
       +")" , function (err, encryptedResults) {
         var results = [];
@@ -70,12 +72,15 @@ var SQLCandidateStore = module.exports = klass(function () {
         +"'"+candidate.stateId+"'"
       +")" , function (err, encryptedResults) {
         var results = [];
+        console.log(encryptedResults.length);
         _.each(encryptedResults, function(res,index) {
             results.push(self.__decryptCandidate(res));
           });
 
-        done(err,{ results : results});
+        self.__sendStatusUpdateMsg(done, err, results);
       });
+
+      
     },
 
     addPosition : function(position, done) {
@@ -90,6 +95,46 @@ var SQLCandidateStore = module.exports = klass(function () {
           debugger;
           done(err, { results : results});
         });
+    },
+
+    __sendStatusUpdateMsg : function (done, err, results) {
+      var keenStore = new KeenStore();
+      var msg = {};
+
+      console.log("WF");
+      console.log(results);
+      console.log("FW");
+
+      _.each(results, function(res,index) {
+            //for each result, send msg
+            var msg = {};
+            switch(res.StageId) {
+              case 1:
+                msg = keenStore.createLeadMsg(res.CandidateId, res.Recruiter_Name, '1')
+                break;
+              case 2:
+                msg = keenStore.createScreenMsg(res.CandidateId, res.Recruiter_Name, '1')
+                break;
+              case 3:
+                msg = keenStore.createInterviewMsg(res.CandidateId, res.Recruiter_Name, '1')
+                break;
+              case 4:
+                msg = keenStore.createOfferMsg(res.CandidateId, res.Recruiter_Name, '1')
+                break;
+              case 5:
+                msg = keenStore.createAcceptedMsg(res.CandidateId, res.Recruiter_Name, '1')
+                break;
+              case 6:
+                msg = keenStore.createWithdrawnMsg(res.CandidateId, res.Recruiter_Name, '1')
+                break;
+              case 7:
+                msg = keenStore.createRejectedMsg(res.CandidateId, res.Recruiter_Name, '1')
+                break;
+            }
+            keenStore.sendStatusMsg(msg, function(){})
+          });
+
+      done(err,{ results : results});
     },
 
     __encryptCandidate : function (candidate) {

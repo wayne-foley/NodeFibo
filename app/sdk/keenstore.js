@@ -7,7 +7,6 @@ var KeenStore = module.exports = klass(function () {
   // constructor
 }).methods({
     getOverallStageFunnel : function (done) {
-      
       var client = this.__configureClient();
       var definition = this.__getFunnelDefinition();
 
@@ -23,6 +22,48 @@ var KeenStore = module.exports = klass(function () {
         });
         done(steps);
       });
+    },
+
+    sendStatusMsg : function(statusMsg, done) {
+      var client = this.__configureClient();
+
+      client.addEvents(statusMsg, function(err, res) {
+        if(err)
+        {
+          console.log('error sending status message...')
+        }
+        console.log('Change Status Event Sent')
+        console.log(statusMsg);
+        done();
+      });
+    },
+
+    createLeadMsg : function(canidateId, recruiter, timeForStateChange) {
+      return { "canidate_lead" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    },
+
+    createScreenMsg : function(canidateId, recruiter, timeForStateChange) {
+      return { "canidate_screen" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    },
+
+    createInterviewMsg : function(canidateId, recruiter, timeForStateChange) {
+      return { "canidate_interview" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    },
+
+    createOfferMsg : function(canidateId, recruiter, timeForStateChange) {
+      return { "canidate_offer" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    },
+
+    createAcceptedMsg : function(canidateId, recruiter, timeForStateChange) {
+      return { "canidate_accepted" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    },
+
+    createRejectedMsg : function(canidateId, recruiter, timeForStateChange) {
+      return { "canidate_rejected" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    },
+
+    createWithdrawnMsg : function(canidateId, recruiter, timeForStateChange) {
+      return { "canidate_withdrawn" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
     },
 
     __getFunnelDefinition  : function () {
