@@ -31,31 +31,35 @@ TODO: Rewrite with either floats or columns, not both -->
 <div class="col-sm-4 pull-right" style="margin-top:30px">
   <div class="row col-sm-12">
     <div class="panel panel-default">
-      <div class="panel-heading">Filter By:</div>
+      <div class="panel-heading">Filter by:</div>
       <div class="panel-body">
-        <div class="btn-group">
-            <label for="recruit_btn" class="col-sm-3 control-label">Recruiter: </label>
-            <button id="recruit_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
-            
-            <ul id="recruit_list" class="dropdown-menu">
-              <li input_id="-1" name="All"><a>All</a></li>
-              <% recruiters.forEach(function(recruiter){ %>
-              <li input_id="<%= recruiter.Recruiter_PersonId %>" name="<%= recruiter.Name %>"><a><%= recruiter.FirstName + " " +recruiter.LastName %></a></li>
-              <% })%>
-            </ul>
+        <div>
+          <span style="margin-right:10px">Recruiter: </span>
+          <div class="btn-group">
+              <button id="recruit_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown">All <span class="caret"></span></button>
+              
+              <ul id="recruit_list" class="dropdown-menu">
+                <li input_id="-1" name="All" selected><a>All</a></li>
+                <% recruiters.forEach(function(recruiter){ %>
+                <li input_id="<%= recruiter.Recruiter_PersonId %>" name="<%= recruiter.Name %>"><a><%= recruiter.FirstName + " " +recruiter.LastName %></a></li>
+                <% })%>
+              </ul>
 
+          </div>
         </div>
-        <div class="btn-group">
-            <label for="owner_btn" class="col-sm-3 control-label">Owner: </label>
-            <button id="owner_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
-            <ul id="owner_list" class="dropdown-menu">
-              <li input_id="-1" name="All"><a>All</a></li>
-              <% persons.forEach(function(person){ %>
-              <li input_id="<%= person.PersonId %>" name="<%= person.FirstName %>"><a><%= person.FirstName + " " + person.LastName %></a></li>
-              <% })%>
-            </ul>
+        <div style="margin-top:5px">
+          <span style="margin-right:24px">Owner: </span>
+          <div class="btn-group">
+              <button id="owner_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown">All <span class="caret"></span></button>
+              <ul id="owner_list" class="dropdown-menu">
+                <li input_id="-1" name="All" selected><a>All</a></li>
+                <% persons.forEach(function(person){ %>
+                <li input_id="<%= person.PersonId %>" name="<%= person.FirstName %>"><a><%= person.FirstName + " " + person.LastName %></a></li>
+                <% })%>
+              </ul>
 
-        </div>
+          </div>
+      </div>
       </div>
     </div>
   </div>
