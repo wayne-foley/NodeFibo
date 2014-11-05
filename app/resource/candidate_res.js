@@ -86,6 +86,7 @@ var CandidateRest = module.exports = BaseRes.extend({
     store.getCandidates( function (err, candidates) {
       debugger;
       var grouped = _.groupBy(candidates.results , function (can) {
+        console.log(can);
         return  can.state.name;
       });
       if(req.param('Recruiter_PersonId')){
