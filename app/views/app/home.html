@@ -155,7 +155,7 @@ $(function () {
     var old_state_id = $(this).closest(".state").attr("input_id");
     $("#stage_value").val(old_state_id);
     $("#candidate_value").val(parent_id);
-    var name = $("#state_list").find("li[name="+old_state_id+"]").text();
+    var name = $("#state_list").find("li[name='"+old_state_id+"']").text();
     $("#stage_btn").html(name + " <span class='caret'></span>");
     $("#changeStateModel").modal();
     $("#btnSaveStage").click(saveState);
