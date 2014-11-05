@@ -75,7 +75,7 @@ var SQLCandidateStore = module.exports = klass(function () {
         _.each(encryptedResults, function(res,index) {
             results.push(self.__decryptCandidate(res));
           });
-        console.log("WF");
+
         self.__sendStatusUpdateMsg(done, err, results);
       });
     },
@@ -95,8 +95,59 @@ var SQLCandidateStore = module.exports = klass(function () {
 
         self.__sendStatusUpdateMsg(done, err, results);
       });
+    },
 
-      
+    changeCandidateOwner : function(candidate, done) {
+      console.log("WF");
+      console.log(candidate);
+      var sqlStore = new MySqlStore(),
+      self = this;
+      sqlStore.callStoredProcedure("uspChangeOwner("
+        +"'"+candidate.id+"', "
+        +"'"+candidate.personId+"'"
+      +")" , function (err, encryptedResults) {
+        var results = [];
+        console.log(encryptedResults.length);
+        _.each(encryptedResults, function(res,index) {
+            results.push(self.__decryptCandidate(res));
+          });
+
+        done(err,{ results : results});
+      });
+    },
+
+    changeCandidateDueDate : function(candidate, done) {
+      var sqlStore = new MySqlStore(),
+      self = this;
+      sqlStore.callStoredProcedure("uspChangeDueDate("
+        +"'"+candidate.id+"', "
+        +"'"+candidate.dueDate+"'"
+      +")" , function (err, encryptedResults) {
+        var results = [];
+        console.log(encryptedResults.length);
+        _.each(encryptedResults, function(res,index) {
+            results.push(self.__decryptCandidate(res));
+          });
+
+        done(err,{ results : results});
+      });
+    },
+
+    changeCandidateNote : function(candidate, done) {
+      candidate.notes = this.__encrypt(candidate.notes || candidate.Notes);
+      var sqlStore = new MySqlStore(),
+      self = this;
+      sqlStore.callStoredProcedure("uspChangeNote("
+        +"'"+candidate.id+"', "
+        +"'"+candidate.notes+"'"
+      +")" , function (err, encryptedResults) {
+        var results = [];
+        _.each(encryptedResults, function(res,index) {
+            results.push(self.__decryptCandidate(res));
+          });
+
+        done(err,{ results : results});
+      });
     },
 
     addPosition : function(position, done) {
@@ -116,8 +167,6 @@ var SQLCandidateStore = module.exports = klass(function () {
     __sendStatusUpdateMsg : function (done, err, results) {
       var keenStore = new KeenStore();
       var msg = {};
-      console.log(results.length);
-      console.log("HMM")
       _.each(results, function(res,index) {
             var msg = {};
             switch(res.StageId) {
@@ -155,6 +204,7 @@ var SQLCandidateStore = module.exports = klass(function () {
       candidate.lastName = this.__encrypt(candidate.lastName || candidate.LastName);
       candidate.tagLine = this.__encrypt(candidate.tagLine || candidate.TagLine);
       candidate.email = this.__encrypt(candidate.email || candidate.EmailAddress);
+      candidate.notes = this.__encrypt(candidate.notes || candidate.Notes);
       return candidate;
     },
 
@@ -163,6 +213,7 @@ var SQLCandidateStore = module.exports = klass(function () {
       candidate.lastName = this.__decrypt(candidate.lastName || candidate.LastName);
       candidate.tagLine = this.__decrypt(candidate.tagLine || candidate.TagLine);
       candidate.email = this.__decrypt(candidate.email || candidate.EmailAddress);
+      candidate.notes = this.__decrypt(candidate.notes || candidate.Notes);
       return candidate;
     },
 

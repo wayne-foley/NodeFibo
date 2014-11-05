@@ -32,6 +32,7 @@ CREATE TABLE `candidate` (
   `Recruiter_PersonId` int(11) NOT NULL,
   `Owner_PersonId` int(11) NOT NULL,
   `CurrentStage` int(11) DEFAULT NULL,
+  `DueDate` datetime DEFAULT NULL,
   `LastModified` datetime DEFAULT CURRENT_TIMESTAMP,
   `TagLine` varchar(5000) DEFAULT NULL,
   PRIMARY KEY (`CandidateId`),
@@ -189,7 +190,127 @@ SELECT CandidateId,
        Notes, 
        JobLink, 
        C.EmailAddress, 
-       LastModified,  
+       LastModified,
+       DueDate,  
+       P.Name, 
+       S.StageId, 
+       S.name AS 'State_Name', 
+       R.FirstName AS 'Recruiter_Name', 
+       O.FirstName AS 'Owner_Name'
+  FROM  Candidate C
+  INNER JOIN Position P ON P.PositionID = C.Position_PositionId
+  INNER JOIN State S ON S.StageId = C.CurrentStage
+  INNER JOIN Person R ON R.PersonId = C.Recruiter_PersonId
+  INNER JOIN Person O ON O.PersonId = C.Owner_PersonId
+  WHERE C.CandidateId = pCandidateId;
+END ;;
+
+DELIMITER ;
+
+--
+-- Dumping routines for database 'hpcloudrecruiting'
+--
+DROP PROCEDURE IF EXISTS `uspChangeOwner`;
+
+DELIMITER ;;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uspChangeOwner`(IN pCandidateId INT, IN pPersonId INT)
+BEGIN
+
+ UPDATE Candidate
+
+ SET    Owner_PersonId = pPersonId
+
+ WHERE  CandidateId  = pCandidateId;
+
+SELECT CandidateId, 
+       C.FirstName, 
+       C.LastName, 
+       TagLine, 
+       Notes, 
+       JobLink, 
+       C.EmailAddress, 
+       LastModified,
+       DueDate,  
+       P.Name, 
+       S.StageId, 
+       S.name AS 'State_Name', 
+       R.FirstName AS 'Recruiter_Name', 
+       O.FirstName AS 'Owner_Name'
+  FROM  Candidate C
+  INNER JOIN Position P ON P.PositionID = C.Position_PositionId
+  INNER JOIN State S ON S.StageId = C.CurrentStage
+  INNER JOIN Person R ON R.PersonId = C.Recruiter_PersonId
+  INNER JOIN Person O ON O.PersonId = C.Owner_PersonId
+  WHERE C.CandidateId = pCandidateId;
+END ;;
+
+DELIMITER ;
+--
+-- Dumping routines for database 'hpcloudrecruiting'
+--
+DROP PROCEDURE IF EXISTS `uspChangeDueDate`;
+
+DELIMITER ;;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uspChangeDueDate`(IN pCandidateId INT, IN pNewDueDate datetime)
+BEGIN
+
+ UPDATE Candidate
+
+ SET    DueDate = pNewDueDate
+
+ WHERE  CandidateId  = pCandidateId;
+
+SELECT CandidateId, 
+       C.FirstName, 
+       C.LastName, 
+       TagLine, 
+       Notes, 
+       JobLink, 
+       C.EmailAddress, 
+       LastModified,
+       DueDate,  
+       P.Name, 
+       S.StageId, 
+       S.name AS 'State_Name', 
+       R.FirstName AS 'Recruiter_Name', 
+       O.FirstName AS 'Owner_Name'
+  FROM  Candidate C
+  INNER JOIN Position P ON P.PositionID = C.Position_PositionId
+  INNER JOIN State S ON S.StageId = C.CurrentStage
+  INNER JOIN Person R ON R.PersonId = C.Recruiter_PersonId
+  INNER JOIN Person O ON O.PersonId = C.Owner_PersonId
+  WHERE C.CandidateId = pCandidateId;
+END ;;
+
+DELIMITER ;
+
+--
+-- Dumping routines for database 'hpcloudrecruiting'
+--
+DROP PROCEDURE IF EXISTS `uspChangeNote`;
+
+DELIMITER ;;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `uspChangeNote`(IN pCandidateId INT, IN pNewNote varchar(5000))
+BEGIN
+
+ UPDATE Candidate
+
+ SET    Notes = pNewNote
+
+ WHERE  CandidateId  = pCandidateId;
+
+SELECT CandidateId, 
+       C.FirstName, 
+       C.LastName, 
+       TagLine, 
+       Notes, 
+       JobLink, 
+       C.EmailAddress, 
+       LastModified,
+       DueDate,  
        P.Name, 
        S.StageId, 
        S.name AS 'State_Name', 
@@ -219,7 +340,8 @@ BEGIN
        Notes, 
        JobLink, 
        C.EmailAddress, 
-       LastModified,  
+       LastModified,
+       DueDate,
        P.Name, 
        S.StageId, 
        S.name AS 'State_Name', 
@@ -325,7 +447,8 @@ BEGIN
            Recruiter_PersonId           ,
            Owner_PersonId               ,
            TagLine                      ,
-           CurrentStage
+           CurrentStage                 ,
+           DueDate
          )
     VALUES
          (
@@ -337,7 +460,8 @@ BEGIN
            pRecruiterId                  ,
            pOwnerId                      ,
            pTagLine                      ,
-           1
+           1,
+           CURDATE() + INTERVAL 2 DAY
          ) ;
 
 SELECT CandidateId, 
@@ -347,7 +471,8 @@ SELECT CandidateId,
        Notes, 
        JobLink, 
        C.EmailAddress, 
-       LastModified,  
+       LastModified,
+       DueDate, 
        P.Name, 
        S.StageId, 
        S.name AS 'State_Name', 

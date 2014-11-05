@@ -16,6 +16,9 @@ var CandidateRest = module.exports = BaseRes.extend({
     app.post('/candidate/add', this.ensureAuthenticated, _.bind(this.addCandidate, this));
     app.post('/candidate/changestate', this.ensureAuthenticated, _.bind(this.changeState, this));
     app.post('/positions/add', this.ensureAuthenticated, _.bind(this.addNewPosition, this));
+    app.post('/candidate/changeowner',  this.ensureAuthenticated, _.bind(this.changeOwner, this));
+    app.post('/candidate/changeduedate', this.ensureAuthenticated,  _.bind(this.changeDueDate, this));
+    app.post('/candidate/changenote', this.ensureAuthenticated, _.bind(this.changeNote, this));
   },
 
 
@@ -29,6 +32,27 @@ var CandidateRest = module.exports = BaseRes.extend({
   changeState : function (req,res) {
     var store = new CandidateStore();
     store.changeCandidateState(req.body, function (candidate) {
+      res.redirect('/');
+    });
+  },
+
+  changeOwner : function (req,res) {
+    var store = new CandidateStore();
+    store.changeCandidateOwner(req.body, function (candidate) {
+      res.redirect('/');
+    });
+  },
+
+  changeDueDate : function (req,res) {
+    var store = new CandidateStore();
+    store.changeCandidateDueDate(req.body, function (candidate) {
+      res.redirect('/');
+    });
+  },
+
+  changeNote : function (req,res) {
+    var store = new CandidateStore();
+    store.changeCandidateNote(req.body, function (candidate) {
       res.redirect('/');
     });
   },
