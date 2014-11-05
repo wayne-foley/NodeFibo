@@ -41,32 +41,32 @@ var KeenStore = module.exports = klass(function () {
       });
     },
 
-    createLeadMsg : function(canidateId, recruiter, timeForStateChange) {
-      return { "canidate_lead" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    createLeadMsg : function(candidateId, recruiter, timeForStateChange) {
+      return { "candidate_lead" : [{"CandidateId" : candidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
     },
 
-    createScreenMsg : function(canidateId, recruiter, timeForStateChange) {
-      return { "canidate_screen" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    createScreenMsg : function(candidateId, recruiter, timeForStateChange) {
+      return { "candidate_screen" : [{"CandidateId" : candidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
     },
 
-    createInterviewMsg : function(canidateId, recruiter, timeForStateChange) {
-      return { "canidate_interview" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    createInterviewMsg : function(candidateId, recruiter, timeForStateChange) {
+      return { "candidate_interview" : [{"CandidateId" : candidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
     },
 
-    createOfferMsg : function(canidateId, recruiter, timeForStateChange) {
-      return { "canidate_offer" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    createOfferMsg : function(candidateId, recruiter, timeForStateChange) {
+      return { "candidate_offer" : [{"CandidateId" : candidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
     },
 
-    createAcceptedMsg : function(canidateId, recruiter, timeForStateChange) {
-      return { "canidate_accepted" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    createAcceptedMsg : function(candidateId, recruiter, timeForStateChange) {
+      return { "candidate_accepted" : [{"CandidateId" : candidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
     },
 
-    createRejectedMsg : function(canidateId, recruiter, timeForStateChange) {
-      return { "canidate_rejected" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    createRejectedMsg : function(candidateId, recruiter, timeForStateChange) {
+      return { "candidate_rejected" : [{"CandidateId" : candidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
     },
 
-    createWithdrawnMsg : function(canidateId, recruiter, timeForStateChange) {
-      return { "canidate_withdrawn" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
+    createWithdrawnMsg : function(candidateId, recruiter, timeForStateChange) {
+      return { "candidate_withdrawn" : [{"CandidateId" : candidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }
     },
 
     __aggFunnelData : function(data) {
@@ -85,24 +85,24 @@ var KeenStore = module.exports = klass(function () {
       var funnel = new Keen.Query('funnel', {
         steps: [
           {
-            event_collection: "canidate_lead",
-            actor_property: "CanidateId"
+            event_collection: "candidate_lead",
+            actor_property: "CandidateId"
           },
           {
-            event_collection: "canidate_screen",
-            actor_property: "CanidateId"
+            event_collection: "candidate_screen",
+            actor_property: "CandidateId"
           },
           {
-            event_collection: "canidate_interview",
-            actor_property: "CanidateId"
+            event_collection: "candidate_interview",
+            actor_property: "CandidateId"
           },
           {
-            event_collection: "canidate_offer",
-            actor_property: "CanidateId"
+            event_collection: "candidate_offer",
+            actor_property: "CandidateId"
           },
           {
-            event_collection: "canidate_accepted",
-            actor_property: "CanidateId"
+            event_collection: "candidate_accepted",
+            actor_property: "CandidateId"
           }
         ],
         timeframe: timeframe

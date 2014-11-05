@@ -42,7 +42,6 @@ var CandidateRest = module.exports = BaseRes.extend({
         var recs = recruiters;
         store.getPersons( function(err, persons) {
           var pers = persons;
-          console.log({positions : pos,  recruiters : recs, owners : pers });
           res.render('app/addcandidate' , {positions : pos,  recruiters : recs, owners : pers });
         });
       });
@@ -109,6 +108,8 @@ var CandidateRest = module.exports = BaseRes.extend({
           var weeklyStats = data;
           store.getStates( function (err, states) {
             var all_states = states;
+            console.log(overallStats);
+            console.log(weeklyStats);
             res.render('app/home' , { candidates : grouped, all_states : all_states, overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
           });
         });

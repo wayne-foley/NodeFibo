@@ -5,29 +5,32 @@ var client = Keen.configure({
     readKey: "9272e4b925cb74c46d43a6803c92e5058e46574b53dacab489ed112376e766d54e963a0a207c6e7e2c57fc5d29827675e83271a79c0a27449a4e085c47177e4640afe1f807755b2ab9334af99d1aab5fa31c0bdd8ca3d5b84f2de0c7d54d8701c8c6b5c3e15075cbd6c55e1af7182a98"
 });
 
+//sendLeadEvent(client, "5", "Sam", "1");
+//sendScreenEvent(client, "4", "Sam", "3");
+
 console.log("query keen for funnel...");
 
 var funnel = new Keen.Query('funnel', {
   steps: [
     {
-      event_collection: "canidate_lead",
-      actor_property: "CanidateId"
+      event_collection: "candidate_lead",
+      actor_property: "CandidateId"
     },
     {
-      event_collection: "canidate_screen",
-      actor_property: "CanidateId"
+      event_collection: "candidate_screen",
+      actor_property: "CandidateId"
     },
     {
-      event_collection: "canidate_interview",
-      actor_property: "CanidateId"
+      event_collection: "candidate_interview",
+      actor_property: "CandidateId"
     },
     {
-      event_collection: "canidate_offer",
-      actor_property: "CanidateId"
+      event_collection: "candidate_offer",
+      actor_property: "CandidateId"
     },
     {
-      event_collection: "canidate_accepted",
-      actor_property: "CanidateId"
+      event_collection: "candidate_accepted",
+      actor_property: "CandidateId"
     }
   ],
   timeframe: ""
@@ -55,7 +58,7 @@ client.run(funnel, function(err, response){
 
 function sendLeadEvent(client, canidateId, recruiter, timeForStateChange) {
 	client.addEvents({
-		"canidate_lead" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }, function(err, res) {
+		"candidate_lead" : [{"CandidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }, function(err, res) {
 		if (err) {
 			console.log("Oh no, an error!");
 		} else {
@@ -66,7 +69,7 @@ function sendLeadEvent(client, canidateId, recruiter, timeForStateChange) {
 
 function sendScreenEvent(client, canidateId, recruiter, timeForStateChange) {
 	client.addEvents({
-		"canidate_screen" : [{"CanidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }, function(err, res) {
+		"candidate_screen" : [{"CandidateId" : canidateId}, {"Recruiter" : recruiter}, {"Time taken:" : timeForStateChange}] }, function(err, res) {
 		if (err) {
 			console.log("Oh no, an error!");
 		} else {

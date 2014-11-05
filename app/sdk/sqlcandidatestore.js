@@ -75,8 +75,8 @@ var SQLCandidateStore = module.exports = klass(function () {
         _.each(encryptedResults, function(res,index) {
             results.push(self.__decryptCandidate(res));
           });
-
-        done(err,{ results : results});
+        console.log("WF");
+        self.__sendStatusUpdateMsg(done, err, results);
       });
     },
 
@@ -116,7 +116,8 @@ var SQLCandidateStore = module.exports = klass(function () {
     __sendStatusUpdateMsg : function (done, err, results) {
       var keenStore = new KeenStore();
       var msg = {};
-
+      console.log(results.length);
+      console.log("HMM")
       _.each(results, function(res,index) {
             var msg = {};
             switch(res.StageId) {
@@ -142,6 +143,7 @@ var SQLCandidateStore = module.exports = klass(function () {
                 msg = keenStore.createRejectedMsg(res.CandidateId, res.Recruiter_Name, '1')
                 break;
             }
+
             keenStore.sendStatusMsg(msg, function(){})
           });
 

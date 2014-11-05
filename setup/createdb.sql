@@ -340,7 +340,28 @@ BEGIN
            1
          ) ;
 
-         END ;;
+SELECT CandidateId, 
+       C.FirstName, 
+       C.LastName, 
+       TagLine, 
+       Notes, 
+       JobLink, 
+       C.EmailAddress, 
+       LastModified,  
+       P.Name, 
+       S.StageId, 
+       S.name AS 'State_Name', 
+       R.FirstName AS 'Recruiter_Name', 
+       O.FirstName AS 'Owner_Name'
+  FROM  Candidate C
+  INNER JOIN Position P ON P.PositionID = C.Position_PositionId
+  INNER JOIN State S ON S.StageId = C.CurrentStage
+  INNER JOIN Person R ON R.PersonId = C.Recruiter_PersonId
+  INNER JOIN Person O ON O.PersonId = C.Owner_PersonId
+  WHERE C.CandidateId = Last_Insert_Id();
+
+END ;;
+
 DELIMITER ;
 
 DROP PROCEDURE IF EXISTS `uspInsertPosition`;
