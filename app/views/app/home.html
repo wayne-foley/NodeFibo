@@ -38,8 +38,9 @@ TODO: Rewrite with either floats or columns, not both -->
             <button id="recruit_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
             
             <ul id="recruit_list" class="dropdown-menu">
-              <% all_states.forEach(function(state){ %>
-              <li input_id="<%= state.StageId %>" name="<%= state.Name %>"><a><%= state.Name %></a></li>
+              <li input_id="-1" name="All"><a>All</a></li>
+              <% recruiters.forEach(function(recruiter){ %>
+              <li input_id="<%= recruiter.Recruiter_PersonId %>" name="<%= recruiter.Name %>"><a><%= recruiter.FirstName + " " +recruiter.LastName %></a></li>
               <% })%>
             </ul>
 
@@ -47,10 +48,10 @@ TODO: Rewrite with either floats or columns, not both -->
         <div class="btn-group">
             <label for="owner_btn" class="col-sm-3 control-label">Owner: </label>
             <button id="owner_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
-            
             <ul id="owner_list" class="dropdown-menu">
-              <% all_states.forEach(function(state){ %>
-              <li input_id="<%= state.StageId %>" name="<%= state.Name %>"><a><%= state.Name %></a></li>
+              <li input_id="-1" name="All"><a>All</a></li>
+              <% persons.forEach(function(person){ %>
+              <li input_id="<%= person.PersonId %>" name="<%= person.FirstName %>"><a><%= person.FirstName + " " + person.LastName %></a></li>
               <% })%>
             </ul>
 

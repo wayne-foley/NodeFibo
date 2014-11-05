@@ -88,7 +88,9 @@ var CandidateRest = module.exports = BaseRes.extend({
       var grouped = _.groupBy(candidates.results , function (can) {
         return  can.state.name;
       });
-
+      if(req.param('Recruiter_PersonId')){
+        grouped = _.filter(candidates.results, function (can){ return can.recruiter == req.param('Recruiter_PersonId'); });
+      }
       var results = [];
       for(var state in grouped) {
         results.push({
@@ -110,7 +112,11 @@ var CandidateRest = module.exports = BaseRes.extend({
             var all_states = states;
             console.log(overallStats);
             console.log(weeklyStats);
-            res.render('app/home' , { candidates : grouped, all_states : all_states, overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
+            store.getRecruiters( function (err, recruiters) {
+              store.getPersons( function (err, persons) {
+                res.render('app/home' , { persons : persons, recruiters : recruiters, candidates : grouped, all_states : all_states, overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
+              });
+            });
           });
         });
       });

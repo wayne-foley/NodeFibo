@@ -44,16 +44,16 @@ var SQLCandidateStore = module.exports = klass(function () {
     getRecruiters  : function (done) {
       var sqlStore = new MySqlStore(),
         self = this;
-        sqlStore.callStoredProcedure("uspGetRecruiters", function (err, states) {
-          done(err, states);
+        sqlStore.callStoredProcedure("uspGetRecruiters", function (err, recruiters) {
+          done(err, recruiters);
         });
     },
 
     getPersons  : function (done) {
       var sqlStore = new MySqlStore(),
         self = this;
-        sqlStore.callStoredProcedure("uspGetPersons", function (err, states) {
-          done(err, states);
+        sqlStore.callStoredProcedure("uspGetPersons", function (err, persons) {
+          done(err, persons);
         });
     },
 
