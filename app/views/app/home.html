@@ -4,20 +4,20 @@
 TODO: Rewrite with either floats or columns, not both -->
 <div class="container col-sm-8 pull-left">
   <% candidates.forEach(function(state){ %>
-    <div class="row container state" input_id="<%= state.name %>">
+    <div class="row container state" input_id="<%= state.id %>">
 
         <div class="col-sm-7">
         <h2><%= state.name%></h2>
         <div class="well">
         <% state.candidates.forEach( function (candidate) {%>
           <div class="row">
-              <div class="candidateRow" input_id="<%=candidate.CandidateId%>">
+              <div class="candidateRow" input_id="<%=candidate.CandidateId%>" owner="<%=candidate.Owner_PersonId%>" duedate="<%=candidate.DueDate%>">
                 <div class="col-sm-8">
                       <h4><%=candidate.firstName%> <%=candidate.lastName%><span style='font-size:.75em;color:gray'> (<%=candidate.email%>)</span></h4>
                       <span class="text-muted"><%=candidate.tagLine%></span>
                     </div>
                 <div class="col-sm-3 pull-right">
-                  <button type="button" class="btn btn-info btn-xs movelink">Change Status</button>
+                  <button type="button" class="btn btn-info btn-xs changelink">Change Status</button>
                 </div>
               </div>
           </div>
@@ -124,7 +124,7 @@ TODO: Rewrite with either floats or columns, not both -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
-<div class="modal" id="changeStateModel" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal" id="changeStateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -152,7 +152,7 @@ TODO: Rewrite with either floats or columns, not both -->
           <div class="btn-group">
               <button id="owner_change_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
               
-              <ul id="state_list" class="dropdown-menu">
+              <ul id="owner_change_list" class="dropdown-menu">
                 <% persons.forEach(function(person){ %>
                 <li input_id="<%= person.PersonId %>" name="<%= person.PersonId %>"><a><%= person.FirstName + " " + person.LastName %></a></li>
                 <% })%>
@@ -197,14 +197,24 @@ function getUrlVars()
 }
 
 $(function () {
-  $(".movelink").click(function(e){
+  $(".changelink").click(function(e){
     var parent_id = $(this).closest(".candidateRow").attr("input_id");
     var old_state_id = $(this).closest(".state").attr("input_id");
     $("#stage_value").val(old_state_id);
     $("#candidate_value").val(parent_id);
-    var name = $("#state_list").find("li[name='"+old_state_id+"']").text();
+
+    //Populate state list selected option
+    var name = $("#state_list").find("li[input_id='"+old_state_id+"']").text();
     $("#stage_btn").html(name + " <span class='caret'></span>");
-    $("#changeStateModel").modal();
+    
+    //Populate owner list options dropdown
+    var old_owner_id = $(this).closest(".candidateRow").attr("owner");
+    var owner = $("#owner_change_list").find("li[name='"+old_owner_id+"']").text();
+    $("#owner_change_value").val(old_owner_id);
+    $("#owner_change_btn").html(owner + " <span class='caret'></span>");
+
+    //This will now kick off three AJAX calls instead of 1.  Too lazy to refactor handlers now.
+    $("#changeStateModal").modal();
     $("#btnSaveStage").click(saveState);
   });
   //Reload on drop down selection
@@ -232,9 +242,19 @@ $(function () {
 
   }
   //Change the user's state in a modal
-  $("#changeStateModel").find("li").click(function(e){
+  $("#state_list").find("li").click(function(e){
     $("#stage_value").val($(this).attr("input_id"));
     $("#stage_btn").html($(this).text() + " <span class='caret'></span>");
   });
+    //Change the user's owner in a modal
+  $("#owner_change_list").find("li").click(function(e){
+    $("#owner_change_value").val($(this).attr("input_id"));
+    $("#owner_change_btn").html($(this).text() + " <span class='caret'></span>");
+  });
+    //Change the due date state in a modal
+  // $("#state_list").find("li").click(function(e){
+  //   $("#stage_value").val($(this).attr("input_id"));
+  //   $("#stage_btn").html($(this).text() + " <span class='caret'></span>");
+  // });
 });
 </script>

@@ -127,7 +127,7 @@ var CandidateRest = module.exports = BaseRes.extend({
       }
       if(req.query.own && req.query.own != "all"){
         filtered = _.filter(filtered, function (can){ return can.Owner_PersonId == req.query.own; });
-        console.log(filtered);
+        //console.log(filtered);
       }
 
       var grouped = _.groupBy(filtered , function (can) {
@@ -139,6 +139,7 @@ var CandidateRest = module.exports = BaseRes.extend({
       for(var state in grouped) {
         results.push({
           name : state,
+          id : grouped[state][0].State_Id,
           candidates : grouped[state]
         });
       }

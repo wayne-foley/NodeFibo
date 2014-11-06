@@ -25,6 +25,25 @@ function saveNewPosition() {
 
 function saveState() {
   var $btn = $("#btnSaveStage").button('saving');
+  //Sam is lazy and just making three Ajax calls vs. refractoring handlers.  Sorry guys.
+  $.post("/candidate/changeowner", {
+      id : $("#candidate_value").val(),
+      personId : $("#owner_change_value").val(),
+      
+    })
+    .done(function(build) {
+    });
+  
+  // $.post("/candidate/changedate", {
+  //     id : $("#candidate_value").val(),
+  //     dueDate : $("#owner_change_value").val(),
+      
+  //   })
+  //   .done(function(build) {
+  //     $('#changeStateModel').modal('hide');
+  //     document.location = "/";
+  //   });
+
   $.post("/candidate/changestate", {
       id : $("#candidate_value").val(),
       stateId : $("#stage_value").val(),

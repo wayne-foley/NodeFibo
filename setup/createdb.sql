@@ -345,7 +345,7 @@ BEGIN
        LastModified,
        DueDate,
        P.Name, 
-       S.StageId, 
+       S.StageId AS 'State_Id', 
        S.name AS 'State_Name', 
        R.FirstName AS 'Recruiter_Name', 
        O.FirstName AS 'Owner_Name'

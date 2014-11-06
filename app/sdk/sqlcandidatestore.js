@@ -16,7 +16,8 @@ var SQLCandidateStore = module.exports = klass(function () {
         _.each(encryptedResults, function(res,index) {
             res.state = {
               name : res.State_Name,
-              order : res.State_Order
+              id : res.State_Id,
+              order : res.State_Id
             };
             results.push(self.__decryptCandidate(res));
           });
