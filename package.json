@@ -16,6 +16,7 @@
 	"fast-csv" :"x",
 	"connect-busboy" :"x",
 	"reformed" :"x",
-	"keen.io" :"x"
+	"keen.io" :"x",
+  "moment": "x"
   }
 }

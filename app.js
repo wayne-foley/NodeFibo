@@ -1,6 +1,14 @@
 var PORT = (process.env.VMC_APP_PORT || 3000)
   , HOST = (process.env.VCAP_APP_HOST || 'localhost');
 
+// Extending EJS with a filter to format date using moment framework.
+ejs = require('ejs');
+moment = require('moment');
+ejs.filters.formatDueDate = function(date){
+  return moment(date).fromNow()
+}
+console.log(ejs.filters.formatDueDate);
+
 var fs = require('fs')
   , express = require('express')
   , app = express.createServer()
@@ -11,6 +19,7 @@ var fs = require('fs')
   , url = require('url')
   , busboy = require('connect-busboy')
   , form = require('reformed');
+
 
 // Config
 app.set('views', __dirname + '/app/views');
@@ -49,6 +58,7 @@ passport.serializeUser(function(user, done) {
 passport.deserializeUser(function(user, done) {
   done(null, user);
 });
+
 
 // Resources
 function bootResources(app) {
