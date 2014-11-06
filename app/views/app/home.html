@@ -38,26 +38,26 @@ TODO: Rewrite with either floats or columns, not both -->
           <div class="btn-group">
               <button id="recruit_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown">All <span class="caret"></span></button>
               
-              <ul id="recruit_list" class="dropdown-menu">
-                <li input_id="-1" name="All" selected><a>All</a></li>
+              <ul id="recruit_list" class="dropdown-menu" style="cursor:pointer">
+                <li input_id="all" name="all" selected><a>All</a></li>
                 <% recruiters.forEach(function(recruiter){ %>
-                <li input_id="<%= recruiter.Recruiter_PersonId %>" name="<%= recruiter.Name %>"><a><%= recruiter.FirstName + " " +recruiter.LastName %></a></li>
+                <li input_id="<%= recruiter.PersonId %>" name="<%= recruiter.FirstName %>"><a><%= recruiter.FirstName + " " +recruiter.LastName %></a></li>
                 <% })%>
               </ul>
-
+              <input id="recruiter_filter_value" type="hidden" value='all'/>
           </div>
         </div>
         <div style="margin-top:5px">
           <span style="margin-right:24px">Owner: </span>
           <div class="btn-group">
               <button id="owner_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown">All <span class="caret"></span></button>
-              <ul id="owner_list" class="dropdown-menu">
-                <li input_id="-1" name="All" selected><a>All</a></li>
+              <ul id="owner_list" class="dropdown-menu" style="cursor:pointer">
+                <li input_id="all" name="all" selected><a>All</a></li>
                 <% persons.forEach(function(person){ %>
                 <li input_id="<%= person.PersonId %>" name="<%= person.FirstName %>"><a><%= person.FirstName + " " + person.LastName %></a></li>
                 <% })%>
               </ul>
-
+              <input id="owner_filter_value" type="hidden" value='all'/>
           </div>
       </div>
       </div>
@@ -154,6 +154,20 @@ TODO: Rewrite with either floats or columns, not both -->
   </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 <script type="text/javascript">
+//Used to get query string
+function getUrlVars()
+{
+    var vars = [], hash;
+    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
+}
+
 $(function () {
   $(".movelink").click(function(e){
     var parent_id = $(this).closest(".candidateRow").attr("input_id");
@@ -165,6 +179,31 @@ $(function () {
     $("#changeStateModel").modal();
     $("#btnSaveStage").click(saveState);
   });
+  //Reload on drop down selection
+  $("#recruit_list").find("li").click(function(e){
+    $("#recruiter_filter_value").val($(this).attr("input_id"));
+    document.location = "/?rec="+$(this).attr("input_id")+"&own="+$("#owner_filter_value").val();
+  });
+  $("#owner_list").find("li").click(function(e){
+    $("#owner_filter_value").val($(this).attr("input_id"));
+    document.location = "/?rec="+$("#recruiter_filter_value").val()+"&own="+$(this).attr("input_id");
+  });
+  //Set the right value in dropdown on load
+  var recruiter_filter = getUrlVars()["rec"];
+  var owner_filter = getUrlVars()["own"];
+  if(recruiter_filter && recruiter_filter != "all"){
+    $("#recruiter_filter_value").val(recruiter_filter);
+    var name = $("#recruit_list").find("li[input_id='"+recruiter_filter+"']").text();
+    $("#recruit_btn").html(name + " <span class='caret'></span>");
+
+  }
+  if(owner_filter && owner_filter != "all"){
+    $("#owner_filter_value").val(recruiter_filter);
+    var name = $("#owner_list").find("li[input_id='"+owner_filter+"']").text();
+    $("#owner_btn").html(name + " <span class='caret'></span>");
+
+  }
+  //Change the user's state in a modal
   $("#changeStateModel").find("li").click(function(e){
     $("#stage_value").val($(this).attr("input_id"));
     $("#stage_btn").html($(this).text() + " <span class='caret'></span>");

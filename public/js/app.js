@@ -22,6 +22,7 @@ function saveNewPosition() {
     });
 }
 
+
 function saveState() {
   var $btn = $("#btnSaveStage").button('saving');
   $.post("/candidate/changestate", {
