@@ -16,8 +16,8 @@ TODO: Rewrite with either floats or columns, not both -->
                       <h4><%=candidate.firstName%> <%=candidate.lastName%><span style='font-size:.75em;color:gray'> (<%=candidate.email%>)</span></h4>
                       <span class="text-muted"><%=candidate.tagLine%></span>
                     </div>
-                <div class="col-sm-2 pull-right">
-                  <a class="movelink" style="cursor:pointer"> Move </a>
+                <div class="col-sm-3 pull-right">
+                  <button type="button" class="btn btn-info btn-xs movelink">Change Status</button>
                 </div>
               </div>
           </div>
@@ -129,21 +129,49 @@ TODO: Rewrite with either floats or columns, not both -->
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <h4 class="modal-title">Move Candidate to New Stage</h4>
+        <h4 class="modal-title">Change a Candidate's Status</h4>
       </div>
       <div class="modal-body">
-        <label for="stage_btn" class="col-sm-3 control-label">Pick new stage: </label>
-        <div class="btn-group">
-            <button id="stage_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
-            
-            <ul id="state_list" class="dropdown-menu">
-              <% all_states.forEach(function(state){ %>
-              <li input_id="<%= state.StageId %>" name="<%= state.Name %>"><a><%= state.Name %></a></li>
-              <% })%>
-            </ul>
-            <input id="stage_value" type="hidden"/>
-            <input id="candidate_value" type="hidden"/>
+        <div>
+          <label for="stage_btn" class="col-sm-4 control-label">Change stage: </label>
+          <div class="btn-group">
+              <button id="stage_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
+              
+              <ul id="state_list" class="dropdown-menu">
+                <% all_states.forEach(function(state){ %>
+                <li input_id="<%= state.StageId %>" name="<%= state.Name %>"><a><%= state.Name %></a></li>
+                <% })%>
+              </ul>
+              <input id="stage_value" type="hidden"/>
+              <input id="candidate_value" type="hidden"/>
 
+          </div>
+        </div>
+        <div style="margin-top:10px">
+          <label for="owner_change_btn" class="col-sm-4 control-label">Change owner: </label>
+          <div class="btn-group">
+              <button id="owner_change_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
+              
+              <ul id="state_list" class="dropdown-menu">
+                <% persons.forEach(function(person){ %>
+                <li input_id="<%= person.PersonId %>" name="<%= person.PersonId %>"><a><%= person.FirstName + " " + person.LastName %></a></li>
+                <% })%>
+              </ul>
+              <input id="owner_change_value" type="hidden"/>
+          </div>
+        </div>
+          <div style="margin-top:10px">
+          <label for="duedate_btn" class="col-sm-4 control-label">Change due date: </label>
+          <div class="btn-group">
+              <button id="duedate_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
+              
+              <!-- <ul id="state_list" class="dropdown-menu">
+                <% all_states.forEach(function(state){ %>
+                <li input_id="<%= state.StageId %>" name="<%= state.Name %>"><a><%= state.Name %></a></li>
+                <% })%>
+              </ul> -->
+              <input id="due_date_value" type="hidden"/>
+          </div>
         </div>
       </div>
       <div class="modal-footer">
