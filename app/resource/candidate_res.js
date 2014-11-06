@@ -19,6 +19,7 @@ var CandidateRest = module.exports = BaseRes.extend({
     app.post('/candidate/changeowner',  this.ensureAuthenticated, _.bind(this.changeOwner, this));
     app.post('/candidate/changeduedate', this.ensureAuthenticated,  _.bind(this.changeDueDate, this));
     app.post('/candidate/changenote', this.ensureAuthenticated, _.bind(this.changeNote, this));
+    app.get('/funnelStats', this.ensureAuthenticated, _.bind(this.funnelStats, this));
   },
 
 
@@ -54,6 +55,17 @@ var CandidateRest = module.exports = BaseRes.extend({
     var store = new CandidateStore();
     store.changeCandidateNote(req.body, function (candidate) {
       res.redirect('/');
+    });
+  },
+
+  funnelStats : function (req,res) {
+    var keenStore = new KeenStore();
+    keenStore.getOverallStageFunnel(function(data) {
+      var overallStats = data;
+      keenStore.getWeeklyStageFunnel(function(data) {
+        var weeklyStats = data;
+        res.send({ overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
+      });
     });
   },
 
@@ -135,20 +147,11 @@ var CandidateRest = module.exports = BaseRes.extend({
         return group.candidates[0].state.order;
       });
 
-      var keenStore = new KeenStore();
-      keenStore.getOverallStageFunnel(function(data) {
-        var overallStats = data;
-        keenStore.getWeeklyStageFunnel(function(data) {
-          var weeklyStats = data;
-          store.getStates( function (err, states) {
-            var all_states = states;
-            //console.log(overallStats);
-            //console.log(weeklyStats);
-            store.getRecruiters( function (err, recruiters) {
-              store.getPersons( function (err, persons) {
-                res.render('app/home' , { persons : persons, recruiters : recruiters, candidates : grouped, all_states : all_states, overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
-              });
-            });
+      store.getStates( function (err, states) {
+        var all_states = states;
+        store.getRecruiters( function (err, recruiters) {
+          store.getPersons( function (err, persons) {
+            res.render('app/home' , { persons : persons, recruiters : recruiters, candidates : grouped, all_states : all_states });
           });
         });
       });
