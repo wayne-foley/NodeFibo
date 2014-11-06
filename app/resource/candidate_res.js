@@ -109,13 +109,20 @@ var CandidateRest = module.exports = BaseRes.extend({
     var store = new CandidateStore();
     store.getCandidates( function (err, candidates) {
       debugger;
-      var grouped = _.groupBy(candidates.results , function (can) {
-        console.log(can);
+      var filtered = candidates.results;
+      if(req.query.rec && req.query.rec != "all"){
+        filtered = _.filter(candidates.results, function (can){ return can.Recruiter_PersonId == req.query.rec; });
+      }
+      if(req.query.own && req.query.own != "all"){
+        filtered = _.filter(filtered, function (can){ return can.Owner_PersonId == req.query.own; });
+        console.log(filtered);
+      }
+
+      var grouped = _.groupBy(filtered , function (can) {
+        //console.log(can);
         return  can.state.name;
       });
-      if(req.param('Recruiter_PersonId')){
-        grouped = _.filter(candidates.results, function (can){ return can.recruiter == req.param('Recruiter_PersonId'); });
-      }
+
       var results = [];
       for(var state in grouped) {
         results.push({
@@ -135,8 +142,8 @@ var CandidateRest = module.exports = BaseRes.extend({
           var weeklyStats = data;
           store.getStates( function (err, states) {
             var all_states = states;
-            console.log(overallStats);
-            console.log(weeklyStats);
+            //console.log(overallStats);
+            //console.log(weeklyStats);
             store.getRecruiters( function (err, recruiters) {
               store.getPersons( function (err, persons) {
                 res.render('app/home' , { persons : persons, recruiters : recruiters, candidates : grouped, all_states : all_states, overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
