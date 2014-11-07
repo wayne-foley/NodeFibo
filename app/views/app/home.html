@@ -24,7 +24,7 @@ TODO: Rewrite with either floats or columns, not both -->
                 </div>
               </div>
           </div>
-          <div class="inputor placeholder hidden note_text_area" contenteditable="true" input_id="<%=candidate.CandidateId%>" style="min-height: 70px;"><%=candidate.notes%>)</div>
+          <div class="inputor placeholder hidden note_text_area" contenteditable="true" input_id="<%=candidate.CandidateId%>" style="min-height: 70px;"><%=candidate.notes%></div>
         <%})%>
       </div>
       </div>
@@ -233,6 +233,13 @@ $(function () {
   //Expand and hide notes 
   $(".noteslink").click(function(e){
     $(".note_text_area[input_id='"+$(this).attr("input_id")+"']").toggleClass("hidden");
+  });
+
+  //Wayne is even more lazy and is saving the notes to the DB whenever the text box is blured/loses focus...
+  $(".note_text_area").blur(function(e){
+    var note = $(this).text();
+    var candidateId = $(this).attr("input_id");
+    saveNote(candidateId, note);
   });
 
   //Work needed to change status
