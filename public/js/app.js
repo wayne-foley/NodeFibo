@@ -34,15 +34,15 @@ function saveState() {
     .done(function(build) {
     });
   
-  // $.post("/candidate/changedate", {
-  //     id : $("#candidate_value").val(),
-  //     dueDate : $("#owner_change_value").val(),
+  var date = moment($(".datetimepicker").data('date'));
+
+  $.post("/candidate/changeDueDate", {
+      id : $("#candidate_value").val(),
+      dueDate : date.format('YYYY-MM-DD')
       
-  //   })
-  //   .done(function(build) {
-  //     $('#changeStateModel').modal('hide');
-  //     document.location = "/";
-  //   });
+    })
+    .done(function(build) {
+    });
 
   $.post("/candidate/changestate", {
       id : $("#candidate_value").val(),

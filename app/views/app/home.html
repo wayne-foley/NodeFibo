@@ -164,17 +164,13 @@ TODO: Rewrite with either floats or columns, not both -->
           </div>
         </div>
           <div style="margin-top:10px">
-          <label for="duedate_btn" class="col-sm-4 control-label">Change due date: </label>
-          <div class="btn-group">
-              <button id="duedate_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
-              
-              <!-- <ul id="state_list" class="dropdown-menu">
-                <% all_states.forEach(function(state){ %>
-                <li input_id="<%= state.StageId %>" name="<%= state.Name %>"><a><%= state.Name %></a></li>
-                <% })%>
-              </ul> -->
+            <label class="col-sm-4 control-label">Change due date: </label>
+              <div class='input-group date col-sm-3 datetimepicker'>
+                  <input type='text' class="form-control" />
+                  <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span>
+                  </span>
+                </div>
               <input id="due_date_value" type="hidden"/>
-          </div>
         </div>
       </div>
       <div class="modal-footer">
@@ -200,6 +196,7 @@ function getUrlVars()
 }
 
 $(function () {
+
   $(".changelink").click(function(e){
     var parent_id = $(this).closest(".candidateRow").attr("input_id");
     var old_state_id = $(this).closest(".state").attr("input_id");
@@ -215,6 +212,13 @@ $(function () {
     var owner = $("#owner_change_list").find("li[name='"+old_owner_id+"']").text();
     $("#owner_change_value").val(old_owner_id);
     $("#owner_change_btn").html(owner + " <span class='caret'></span>");
+
+    //Populate current date
+    var old_date = $(this).closest(".candidateRow").attr("duedate");
+    $("#due_date_value").val(old_date);
+    $('.datetimepicker').datetimepicker({
+                    defaultDate: moment(old_date)
+                });
 
     //This will now kick off three AJAX calls instead of 1.  Too lazy to refactor handlers now.
     $("#changeStateModal").modal();
@@ -254,10 +258,6 @@ $(function () {
     $("#owner_change_value").val($(this).attr("input_id"));
     $("#owner_change_btn").html($(this).text() + " <span class='caret'></span>");
   });
-    //Change the due date state in a modal
-  // $("#state_list").find("li").click(function(e){
-  //   $("#stage_value").val($(this).attr("input_id"));
-  //   $("#stage_btn").html($(this).text() + " <span class='caret'></span>");
-  // });
+
 });
 </script>
