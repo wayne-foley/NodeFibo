@@ -7,17 +7,17 @@ var KeenStore = module.exports = klass(function () {
   // constructor
 }).methods({
 
-    getOverallStageFunnel : function (done) {
-      this.__getFunnelData("",done);
+    getOverallStageFunnel : function (recruiter, done) {
+      this.__getFunnelData("", recruiter, done);
     },
 
-    getWeeklyStageFunnel : function (done) {
-      this.__getFunnelData("this_7_days",done);
+    getWeeklyStageFunnel : function (recruiter, done) {
+      this.__getFunnelData("this_7_days", recruiter, done);
     },
 
-    __getFunnelData : function (timeframe, done) {
+    __getFunnelData : function (timeframe, recruiter, done) {
       var client = this.__configureClient();
-      var definition = this.__getFunnelDefinition(timeframe);
+      var definition = this.__getFunnelDefinition(timeframe, recruiter);
 
       self = this;
       client.run(definition, function(err, response) {
@@ -81,8 +81,8 @@ var KeenStore = module.exports = klass(function () {
         return steps;
     },
 
-    __getFunnelDefinition  : function (timeframe) {
-      var funnel = new Keen.Query('funnel', {
+    __getFunnelDefinition  : function (timeframe, recruiter) {
+      var def = {
         steps: [
           {
             event_collection: "candidate_lead",
@@ -106,7 +106,17 @@ var KeenStore = module.exports = klass(function () {
           }
         ],
         timeframe: timeframe
-      });
+      }
+
+      if(recruiter && recruiter != "" && recruiter != "All" && recruiter != "all")
+      {
+        console.log("updating filters");
+        def.steps.forEach(function(item) {
+          item.filters = [ { "property_name" : "Recruiter", "operator" : "eq", "property_value" : recruiter } ];
+        });
+      }
+
+      var funnel = new Keen.Query('funnel', def);
       return funnel;
     },
 
