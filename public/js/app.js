@@ -53,6 +53,11 @@ function getFunnelStats(){
     });
 }
 
+function saveNote(candidateId, note) {
+  $.post("/candidate/changenote", { id : candidateId, notes:  note }).done(function(build) {
+    });
+}
+
 
 function saveState() {
   var $btn = $("#btnSaveStage").button('saving');
