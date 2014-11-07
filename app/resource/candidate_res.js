@@ -19,7 +19,7 @@ var CandidateRest = module.exports = BaseRes.extend({
     app.post('/candidate/changeowner',  this.ensureAuthenticated, _.bind(this.changeOwner, this));
     app.post('/candidate/changeduedate', this.ensureAuthenticated,  _.bind(this.changeDueDate, this));
     app.post('/candidate/changenote', this.ensureAuthenticated, _.bind(this.changeNote, this));
-    app.get('/funnelStats', this.ensureAuthenticated, _.bind(this.funnelStats, this));
+    app.post('/funnelStats', this.ensureAuthenticated, _.bind(this.funnelStats, this));
   },
 
 
@@ -59,6 +59,9 @@ var CandidateRest = module.exports = BaseRes.extend({
   },
 
   funnelStats : function (req,res) {
+    console.log("Hi Wayne- here are the filter criteria to pass in. Values are 'all' or an int or 'undefined' ");
+    console.log("recruiter ID: " + req.body['Recruiter_PersonId']);
+    console.log("owner ID: " + req.body['Owner_PersonId']);
     var keenStore = new KeenStore();
     keenStore.getOverallStageFunnel(function(data) {
       var overallStats = data;

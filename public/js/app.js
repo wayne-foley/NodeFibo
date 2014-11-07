@@ -22,8 +22,11 @@ function saveNewPosition() {
     });
 }
 
-function getFunnelStats(){
-   $.get("/funnelStats")
+function getFunnelStats(rec, own){
+   $.post("/funnelStats", {
+    Recruiter_PersonId : rec,
+    Owner_PersonId : own,
+   })
     .done(function(results) {
       var chart_html = "";
       var stages = ["Lead", "Phone Screen", "Interview", "Offer", "Accepted"];

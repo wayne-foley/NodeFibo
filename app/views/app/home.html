@@ -228,7 +228,7 @@ function getUrlVars()
 $(function () {
 
   //Let's load the funnels on page load- we'll likely need UI for loading
-  $("#funnel_target_all").ready(getFunnelStats);
+  $("#funnel_target_all").ready(getFunnelStats(getUrlVars()["rec"], getUrlVars()["own"]));
 
   //Expand and hide notes 
   $(".noteslink").click(function(e){
