@@ -195,7 +195,9 @@ SELECT CandidateId,
        P.Name, 
        S.StageId, 
        S.name AS 'State_Name', 
-       R.FirstName AS 'Recruiter_Name', 
+       R.FirstName AS 'Recruiter_Name',
+       C.Recruiter_PersonId,
+       C.Owner_PersonId,
        O.FirstName AS 'Owner_Name'
   FROM  Candidate C
   INNER JOIN Position P ON P.PositionID = C.Position_PositionId
@@ -235,7 +237,9 @@ SELECT CandidateId,
        P.Name, 
        S.StageId, 
        S.name AS 'State_Name', 
-       R.FirstName AS 'Recruiter_Name', 
+       R.FirstName AS 'Recruiter_Name',
+       C.Recruiter_PersonId,
+       C.Owner_PersonId,
        O.FirstName AS 'Owner_Name'
   FROM  Candidate C
   INNER JOIN Position P ON P.PositionID = C.Position_PositionId
@@ -274,7 +278,9 @@ SELECT CandidateId,
        P.Name, 
        S.StageId, 
        S.name AS 'State_Name', 
-       R.FirstName AS 'Recruiter_Name', 
+       R.FirstName AS 'Recruiter_Name',
+       C.Recruiter_PersonId,
+       C.Owner_PersonId,
        O.FirstName AS 'Owner_Name'
   FROM  Candidate C
   INNER JOIN Position P ON P.PositionID = C.Position_PositionId
@@ -314,7 +320,9 @@ SELECT CandidateId,
        P.Name, 
        S.StageId, 
        S.name AS 'State_Name', 
-       R.FirstName AS 'Recruiter_Name', 
+       R.FirstName AS 'Recruiter_Name',
+       C.Recruiter_PersonId,
+       C.Owner_PersonId,
        O.FirstName AS 'Owner_Name'
   FROM  Candidate C
   INNER JOIN Position P ON P.PositionID = C.Position_PositionId
@@ -347,7 +355,9 @@ BEGIN
        P.Name, 
        S.StageId AS 'State_Id', 
        S.name AS 'State_Name', 
-       R.FirstName AS 'Recruiter_Name', 
+       R.FirstName AS 'Recruiter_Name',
+       C.Recruiter_PersonId,
+       C.Owner_PersonId,
        O.FirstName AS 'Owner_Name'
   FROM  Candidate C
   INNER JOIN Position P ON P.PositionID = C.Position_PositionId
@@ -478,7 +488,9 @@ SELECT CandidateId,
        P.Name, 
        S.StageId, 
        S.name AS 'State_Name', 
-       R.FirstName AS 'Recruiter_Name', 
+       R.FirstName AS 'Recruiter_Name',
+       C.Recruiter_PersonId,
+       C.Owner_PersonId,
        O.FirstName AS 'Owner_Name'
   FROM  Candidate C
   INNER JOIN Position P ON P.PositionID = C.Position_PositionId

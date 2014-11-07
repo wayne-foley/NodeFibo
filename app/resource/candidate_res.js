@@ -120,18 +120,18 @@ var CandidateRest = module.exports = BaseRes.extend({
   home : function (req,res) {
     var store = new CandidateStore();
     store.getCandidates( function (err, candidates) {
-      debugger;
       var filtered = candidates.results;
       if(req.query.rec && req.query.rec != "all"){
-        filtered = _.filter(candidates.results, function (can){ return can.Recruiter_PersonId == req.query.rec; });
+        console.log("filter: " +req.query.rec);
+        filtered = _.filter(candidates.results, function (can){ 
+          return can.Recruiter_PersonId == req.query.rec; 
+        });
       }
       if(req.query.own && req.query.own != "all"){
         filtered = _.filter(filtered, function (can){ return can.Owner_PersonId == req.query.own; });
-        //console.log(filtered);
       }
 
       var grouped = _.groupBy(filtered , function (can) {
-        //console.log(can);
         return  can.state.name;
       });
 
