@@ -25,7 +25,6 @@ function saveNewPosition() {
 function getFunnelStats(){
    $.get("/funnelStats")
     .done(function(results) {
-      console.log(results);
       var chart_html = "";
       var stages = ["Lead", "Phone Screen", "Interview", "Offer", "Accepted"];
       var stage_icons = ["lead", "phone", "interview", "offer", "accepted"];
