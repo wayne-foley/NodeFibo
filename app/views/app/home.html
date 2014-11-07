@@ -93,6 +93,53 @@ TODO: Rewrite with either floats or columns, not both -->
         <% }) %>
       </div>
     </div>
+
+    <div class="panel panel-default">
+      <div class="panel-heading">Historical</div>
+      <div class="panel-body">
+       
+      </div>
+    </div>
+
+
+       <!--  <div class="pane_header">Candidate Funnel
+          <div class="pane_header_menu" style="font-size:85%;line-height:18px;">
+            {%if funnel_by_stage.get(1,0) != 0 %}
+              {{ '%01d' % (funnel_by_stage[5]/funnel_by_stage[1] * 100) }}%
+            {%else%}
+              0%
+            {%endif%} Completion Rate
+          </div>
+          <div class="panel panel-default">
+            <div style="color:#888">
+              <table style="width:100%; height:60px;text-align:center;">
+                <tr>
+                  {% for stage in stages %}
+                    <td style="width:20%;" data-toggle="tooltip" data-placement="auto" title="{{stage.name}}">
+                      <i class="fa cl-{{stage.name|lower}}" style="font-size:20px;"></i>
+                      <div style="font-size:12px;">{{funnel_by_stage.get(stage.id,0)}}</div>
+                    </td>
+                    {% if not loop.last %}
+                      <td style="font-size:20px;">
+                        <div class="arrow_box" style="width:28px;height:14px;position:relative;top:-2px" data-toggle="tooltip" data-placement="auto" title="Percent that move on">
+                          <span style="font-size:11px;position:absolute;left:3px;top:0px;">
+                            {%if funnel_by_stage.get(stage.id,0) != 0 %}
+                              {{ '%01d' % (funnel_by_stage.get(stage.id+1,0)/funnel_by_stage.get(stage.id,0) * 100) }}%
+                            {%else%}
+                              0%
+                            {% endif %}
+                          </span>
+                        </div>
+                      </td>
+                    {% endif %}
+                  {% endfor %}
+                </tr>
+              </table>
+            </div>
+          </div>
+        </div> -->
+
+
   </div>
 </div>
 
