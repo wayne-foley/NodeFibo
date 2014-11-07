@@ -22,6 +22,38 @@ function saveNewPosition() {
     });
 }
 
+function getFunnelStats(){
+   $.get("/funnelStats")
+    .done(function(results) {
+      console.log(results);
+      var chart_html = "";
+      var stages = ["Lead", "Phone Screen", "Interview", "Offer", "Accepted"];
+      var stage_icons = ["lead", "phone", "interview", "offer", "accepted"];
+      //TODO: Dynamically pull stage names from backend.  Hardcoding for now
+      for(i=0; i<stages.length; i++){
+        chart_html += "<td style='width:20%;' data-toggle='tooltip' data-placement='auto' title='"+stages[i]+"'><i class='fa tp-"+stage_icons[i]+"' style='font-size:20px;'></i><div style='font-size:12px;'>"+results.overallFunnelStats.funnel[i];
+        if(i != stages.length-1) {
+          chart_html += "<td style='font-size:20px;'><div class='arrow_box' style='width:28px;height:14px;position:relative;top:-2px' data-toggle='tooltip' data-placement='auto' title='Percent that move on'><span style='font-size:11px;position:absolute;left:3px;top:0px;'>" + Math.round(results.overallFunnelStats.aggragate[i+1]) + "%";
+          chart_html +="</span></div></td>";
+        }
+      }
+      $("#funnel_target_all").removeClass("loading");
+      $("#funnel_row_all").html(chart_html);
+
+      //Now for 7 day
+      chart_html = "";
+      for(i=0; i<stages.length; i++){
+        chart_html += "<td style='width:20%;' data-toggle='tooltip' data-placement='auto' title='"+stages[i]+"'><i class='fa tp-"+stage_icons[i]+"' style='font-size:20px;'></i><div style='font-size:12px;'>"+results.weeklyFunnelStats.funnel[i];
+        if(i != stages.length-1) {
+          chart_html += "<td style='font-size:20px;'><div class='arrow_box' style='width:28px;height:14px;position:relative;top:-2px' data-toggle='tooltip' data-placement='auto' title='Percent that move on'><span style='font-size:11px;position:absolute;left:3px;top:0px;'>" + Math.round(results.weeklyFunnelStats.aggragate[i+1]) + "%";
+          chart_html +="</span></div></td>";
+        }
+      }
+      $("#funnel_target_seven").removeClass("loading");
+      $("#funnel_row_seven").html(chart_html);
+    });
+}
+
 
 function saveState() {
   var $btn = $("#btnSaveStage").button('saving');
