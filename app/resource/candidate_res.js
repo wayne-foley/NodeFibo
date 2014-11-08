@@ -117,7 +117,7 @@ var CandidateRest = module.exports = BaseRes.extend({
 			console.log("done");
 		});
 
-      res.render('app/import');
+      res.render('app/import', {candidates: null});
   },
 
   home : function (req,res) {
