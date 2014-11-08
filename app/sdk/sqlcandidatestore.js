@@ -172,25 +172,25 @@ var SQLCandidateStore = module.exports = klass(function () {
             var msg = {};
             switch(res.StageId) {
               case 1:
-                msg = keenStore.createLeadMsg(res.CandidateId, res.Recruiter_Name, '1')
+                msg = keenStore.createLeadMsg(res.CandidateId, res.Recruiter_PersonId, '1')
                 break;
               case 2:
-                msg = keenStore.createScreenMsg(res.CandidateId, res.Recruiter_Name, '1')
+                msg = keenStore.createScreenMsg(res.CandidateId, res.Recruiter_PersonId, '1')
                 break;
               case 3:
-                msg = keenStore.createInterviewMsg(res.CandidateId, res.Recruiter_Name, '1')
+                msg = keenStore.createInterviewMsg(res.CandidateId, res.Recruiter_PersonId, '1')
                 break;
               case 4:
-                msg = keenStore.createOfferMsg(res.CandidateId, res.Recruiter_Name, '1')
+                msg = keenStore.createOfferMsg(res.CandidateId, res.Recruiter_PersonId, '1')
                 break;
               case 5:
-                msg = keenStore.createAcceptedMsg(res.CandidateId, res.Recruiter_Name, '1')
+                msg = keenStore.createAcceptedMsg(res.CandidateId, res.Recruiter_PersonId, '1')
                 break;
               case 6:
-                msg = keenStore.createWithdrawnMsg(res.CandidateId, res.Recruiter_Name, '1')
+                msg = keenStore.createWithdrawnMsg(res.CandidateId, res.Recruiter_PersonId, '1')
                 break;
               case 7:
-                msg = keenStore.createRejectedMsg(res.CandidateId, res.Recruiter_Name, '1')
+                msg = keenStore.createRejectedMsg(res.CandidateId, res.Recruiter_PersonId, '1')
                 break;
             }
 

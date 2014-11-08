@@ -59,13 +59,11 @@ var CandidateRest = module.exports = BaseRes.extend({
   },
 
   funnelStats : function (req,res) {
-    console.log("Hi Wayne- here are the filter criteria to pass in. Values are 'all' or an int or 'undefined' ");
-    console.log("recruiter ID: " + req.body['Recruiter_PersonId']);
-    console.log("owner ID: " + req.body['Owner_PersonId']);
+    var rec = req.body['Recruiter_PersonId'];
     var keenStore = new KeenStore();
-    keenStore.getOverallStageFunnel(function(data) {
+    keenStore.getOverallStageFunnel(rec, function(data) {
       var overallStats = data;
-      keenStore.getWeeklyStageFunnel(function(data) {
+      keenStore.getWeeklyStageFunnel(rec, function(data) {
         var weeklyStats = data;
         res.send({ overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
       });
