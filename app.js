@@ -1,4 +1,4 @@
-var PORT = (process.env.VMC_APP_PORT || 3000)
+var PORT = (process.env.PORT || 3000)
   , HOST = (process.env.VCAP_APP_HOST || 'localhost');
 
 // Extending EJS with a filter to format date using moment framework.
@@ -93,7 +93,7 @@ if (!module.parent) {
   app.listen(PORT);
   console.log('App started on port: ' + PORT);
 }
-	
+
 function downloadPassPhrase() {
 
 	if(!process.env.CryptoKey) {
@@ -102,9 +102,9 @@ function downloadPassPhrase() {
 		process.env.passPhrase = "batman!";
 		return;
 	}
-	
+
 	var keyLocation = url.parse(process.env.CryptoKey);
-	
+
 	var options = {
 		host: keyLocation.host,
 		port: keyLocation.port,
@@ -114,16 +114,16 @@ function downloadPassPhrase() {
 	https.get(options, function(resp){
 		console.log('Downloading encryption key...');
 		var data = '';
-		
+
 		resp.on('data', function(chunk){
 			data += chunk;
 		});
-		
+
 		resp.on('end', function() {
 			process.env.passPhrase = data;
 			console.log('Encryption key downloaded');
 		});
-		
+
 	}).on("error", function(e){
 		console.log("Encryption key could not be downloaded: " + e.message);
 	});

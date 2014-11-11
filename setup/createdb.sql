@@ -16,13 +16,13 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `candidate`
+-- Table structure for table `Candidate`
 --
 
-DROP TABLE IF EXISTS `candidate`;
+DROP TABLE IF EXISTS `Candidate`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `candidate` (
+CREATE TABLE `Candidate` (
   `CandidateId` int(11) NOT NULL AUTO_INCREMENT,
   `FirstName` varchar(500) DEFAULT NULL,
   `LastName` varchar(500) DEFAULT NULL,
@@ -33,36 +33,36 @@ CREATE TABLE `candidate` (
   `Owner_PersonId` int(11) NOT NULL,
   `CurrentStage` int(11) DEFAULT NULL,
   `DueDate` datetime DEFAULT NULL,
-  `LastModified` datetime DEFAULT CURRENT_TIMESTAMP,
+  `LastModified` datetime,
   `TagLine` varchar(5000) DEFAULT NULL,
   PRIMARY KEY (`CandidateId`),
   UNIQUE KEY `CandidateId_UNIQUE` (`CandidateId`),
   KEY `fk_Candidate_Position1_idx` (`Position_PositionId`),
-  CONSTRAINT `fk_Candidate_Position1` FOREIGN KEY (`Position_PositionId`) REFERENCES `position` (`PositionId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Candidate_Position1` FOREIGN KEY (`Position_PositionId`) REFERENCES `Position` (`PositionId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   KEY `fk_Candidate_Recruiter_idx` (`Recruiter_PersonId`),
-  CONSTRAINT `fk_Candidate_Recruiter` FOREIGN KEY (`Recruiter_PersonId`) REFERENCES `person` (`PersonId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Candidate_Recruiter` FOREIGN KEY (`Recruiter_PersonId`) REFERENCES `Person` (`PersonId`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   KEY `fk_Candidate_Owner_idx` (`Owner_PersonId`),
-  CONSTRAINT `fk_Candidate_Owner` FOREIGN KEY (`Owner_PersonId`) REFERENCES `person` (`PersonId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Candidate_Owner` FOREIGN KEY (`Owner_PersonId`) REFERENCES `Person` (`PersonId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `candidate`
+-- Dumping data for table `Candidate`
 --
 
-LOCK TABLES `candidate` WRITE;
-/*!40000 ALTER TABLE `candidate` DISABLE KEYS */;
-/*!40000 ALTER TABLE `candidate` ENABLE KEYS */;
+LOCK TABLES `Candidate` WRITE;
+/*!40000 ALTER TABLE `Candidate` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Candidate` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `role`
+-- Table structure for table `Role`
 --
 
-DROP TABLE IF EXISTS `role`;
+DROP TABLE IF EXISTS `Role`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `role` (
+CREATE TABLE `Role` (
   `RoleId` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(5000) DEFAULT NULL,
   `Description` varchar(5000) DEFAULT NULL,
@@ -72,23 +72,23 @@ CREATE TABLE `role` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `role`
+-- Dumping data for table `Role`
 --
 
-LOCK TABLES `role` WRITE;
-/*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'Hiring Manager','Hiring Manager'),(2,'Recruiter','Recruiter');
-/*!40000 ALTER TABLE `role` ENABLE KEYS */;
+LOCK TABLES `Role` WRITE;
+/*!40000 ALTER TABLE `Role` DISABLE KEYS */;
+INSERT INTO `Role` VALUES (1,'Hiring Manager','Hiring Manager'),(2,'Recruiter','Recruiter');
+/*!40000 ALTER TABLE `Role` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `person`
+-- Table structure for table `Person`
 --
 
-DROP TABLE IF EXISTS `person`;
+DROP TABLE IF EXISTS `Person`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `person` (
+CREATE TABLE `Person` (
   `FirstName` varchar(5000) DEFAULT NULL,
   `LastName` varchar(5000) DEFAULT NULL,
   `EmailAddress` varchar(5000) DEFAULT NULL,
@@ -97,32 +97,32 @@ CREATE TABLE `person` (
   PRIMARY KEY (`PersonId`),
   UNIQUE KEY `PersonId_UNIQUE` (`PersonId`),
   KEY `fk_Person_Role_idx` (`Role_RoleId`),
-  CONSTRAINT `fk_Person_Role` FOREIGN KEY (`Role_RoleId`) REFERENCES `role` (`RoleId`) ON DELETE NO ACTION ON UPDATE NO ACTION
+  CONSTRAINT `fk_Person_Role` FOREIGN KEY (`Role_RoleId`) REFERENCES `Role` (`RoleId`) ON DELETE NO ACTION ON UPDATE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `person`
+-- Dumping data for table `Person`
 --
 
-LOCK TABLES `person` WRITE;
-/*!40000 ALTER TABLE `person` DISABLE KEYS */;
-INSERT INTO `person` VALUES ('Wayne','Foley','wayne.foley@hp.com',1,1),('Sam','Gazitt','sam.gazitt@hp.com',2,2);
-/*!40000 ALTER TABLE `person` ENABLE KEYS */;
+LOCK TABLES `Person` WRITE;
+/*!40000 ALTER TABLE `Person` DISABLE KEYS */;
+INSERT INTO `Person` VALUES ('Wayne','Foley','wayne.foley@hp.com',1,1),('Sam','Gazitt','sam.gazitt@hp.com',2,2);
+/*!40000 ALTER TABLE `Person` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `position`
+-- Table structure for table `Position`
 --
 
-DROP TABLE IF EXISTS `position`;
+DROP TABLE IF EXISTS `Position`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `position` (
+CREATE TABLE `Position` (
   `PositionId` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(5000) DEFAULT NULL,
   `Description` varchar(5000) DEFAULT NULL,
-  `DatePosted` datetime DEFAULT CURRENT_TIMESTAMP,
+  `DatePosted` datetime,
   `JobLink` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`PositionId`),
   UNIQUE KEY `Id_UNIQUE` (`PositionId`)
@@ -130,23 +130,23 @@ CREATE TABLE `position` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `position`
+-- Dumping data for table `Position`
 --
 
-LOCK TABLES `position` WRITE;
-/*!40000 ALTER TABLE `position` DISABLE KEYS */;
-INSERT INTO `position` VALUES (2,'Senior SDE','Senior SDE','2014-10-29 16:46:31','Senior SDE'),(3,'Distinguished Technologist','Distinguished Technologist','2014-10-29 16:57:38','Distinguished Technologist Link');
-/*!40000 ALTER TABLE `position` ENABLE KEYS */;
+LOCK TABLES `Position` WRITE;
+/*!40000 ALTER TABLE `Position` DISABLE KEYS */;
+INSERT INTO `Position` VALUES (2,'Senior SDE','Senior SDE','2014-10-29 16:46:31','Senior SDE'),(3,'Distinguished Technologist','Distinguished Technologist','2014-10-29 16:57:38','Distinguished Technologist Link');
+/*!40000 ALTER TABLE `Position` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `state`
+-- Table structure for table `State`
 --
 
-DROP TABLE IF EXISTS `state`;
+DROP TABLE IF EXISTS `State`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `state` (
+CREATE TABLE `State` (
   `StageId` int(11) NOT NULL AUTO_INCREMENT,
   `Name` varchar(5000) DEFAULT NULL,
   `Description` varchar(5000) DEFAULT NULL,
@@ -158,13 +158,13 @@ CREATE TABLE `state` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `state`
+-- Dumping data for table `State`
 --
 
-LOCK TABLES `state` WRITE;
-/*!40000 ALTER TABLE `state` DISABLE KEYS */;
-INSERT INTO `state` VALUES (1,'Lead','Candidaate entered into the system',1),(2,'Phone Screen','Candidaate entered into the system',2),(3,'Interview','Candidaate entered into the system',3),(4,'Offer','Candidaate entered into the system',4),(5,'Accepted','Candidaate entered into the system',5),(6,'Withdrawn','Candidaate entered into the system',6),(7,'Rejected','Candidaate entered into the system',7);
-/*!40000 ALTER TABLE `state` ENABLE KEYS */;
+LOCK TABLES `State` WRITE;
+/*!40000 ALTER TABLE `State` DISABLE KEYS */;
+INSERT INTO `State` VALUES (1,'Lead','Candidaate entered into the system',1),(2,'Phone Screen','Candidaate entered into the system',2),(3,'Interview','Candidaate entered into the system',3),(4,'Offer','Candidaate entered into the system',4),(5,'Accepted','Candidaate entered into the system',5),(6,'Withdrawn','Candidaate entered into the system',6),(7,'Rejected','Candidaate entered into the system',7);
+/*!40000 ALTER TABLE `State` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -174,7 +174,7 @@ DROP PROCEDURE IF EXISTS `uspChangeState`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspChangeState`(IN pCandidateId INT, IN pStateId INT)
+CREATE PROCEDURE `uspChangeState`(IN pCandidateId INT, IN pStateId INT)
 BEGIN
 
  UPDATE Candidate
@@ -183,18 +183,18 @@ BEGIN
 
  WHERE  CandidateId  = pCandidateId;
 
-SELECT CandidateId, 
-       C.FirstName, 
-       C.LastName, 
-       TagLine, 
-       Notes, 
-       JobLink, 
-       C.EmailAddress, 
+SELECT CandidateId,
+       C.FirstName,
+       C.LastName,
+       TagLine,
+       Notes,
+       JobLink,
+       C.EmailAddress,
        LastModified,
-       DueDate,  
-       P.Name, 
-       S.StageId, 
-       S.name AS 'State_Name', 
+       DueDate,
+       P.Name,
+       S.StageId,
+       S.name AS 'State_Name',
        R.FirstName AS 'Recruiter_Name',
        C.Recruiter_PersonId,
        C.Owner_PersonId,
@@ -216,7 +216,7 @@ DROP PROCEDURE IF EXISTS `uspChangeOwner`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspChangeOwner`(IN pCandidateId INT, IN pPersonId INT)
+CREATE PROCEDURE `uspChangeOwner`(IN pCandidateId INT, IN pPersonId INT)
 BEGIN
 
  UPDATE Candidate
@@ -225,18 +225,18 @@ BEGIN
 
  WHERE  CandidateId  = pCandidateId;
 
-SELECT CandidateId, 
-       C.FirstName, 
-       C.LastName, 
-       TagLine, 
-       Notes, 
-       JobLink, 
-       C.EmailAddress, 
+SELECT CandidateId,
+       C.FirstName,
+       C.LastName,
+       TagLine,
+       Notes,
+       JobLink,
+       C.EmailAddress,
        LastModified,
-       DueDate,  
-       P.Name, 
-       S.StageId, 
-       S.name AS 'State_Name', 
+       DueDate,
+       P.Name,
+       S.StageId,
+       S.name AS 'State_Name',
        R.FirstName AS 'Recruiter_Name',
        C.Recruiter_PersonId,
        C.Owner_PersonId,
@@ -257,7 +257,7 @@ DROP PROCEDURE IF EXISTS `uspChangeDueDate`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspChangeDueDate`(IN pCandidateId INT, IN pNewDueDate datetime)
+CREATE PROCEDURE `uspChangeDueDate`(IN pCandidateId INT, IN pNewDueDate datetime)
 BEGIN
 
  UPDATE Candidate
@@ -266,18 +266,18 @@ BEGIN
 
  WHERE  CandidateId  = pCandidateId;
 
-SELECT CandidateId, 
-       C.FirstName, 
-       C.LastName, 
-       TagLine, 
-       Notes, 
-       JobLink, 
-       C.EmailAddress, 
+SELECT CandidateId,
+       C.FirstName,
+       C.LastName,
+       TagLine,
+       Notes,
+       JobLink,
+       C.EmailAddress,
        LastModified,
-       DueDate,  
-       P.Name, 
-       S.StageId, 
-       S.name AS 'State_Name', 
+       DueDate,
+       P.Name,
+       S.StageId,
+       S.name AS 'State_Name',
        R.FirstName AS 'Recruiter_Name',
        C.Recruiter_PersonId,
        C.Owner_PersonId,
@@ -299,7 +299,7 @@ DROP PROCEDURE IF EXISTS `uspChangeNote`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspChangeNote`(IN pCandidateId INT, IN pNewNote varchar(5000))
+CREATE PROCEDURE `uspChangeNote`(IN pCandidateId INT, IN pNewNote varchar(5000))
 BEGIN
 
  UPDATE Candidate
@@ -308,18 +308,18 @@ BEGIN
 
  WHERE  CandidateId  = pCandidateId;
 
-SELECT CandidateId, 
-       C.FirstName, 
-       C.LastName, 
-       TagLine, 
-       Notes, 
-       JobLink, 
-       C.EmailAddress, 
+SELECT CandidateId,
+       C.FirstName,
+       C.LastName,
+       TagLine,
+       Notes,
+       JobLink,
+       C.EmailAddress,
        LastModified,
-       DueDate,  
-       P.Name, 
-       S.StageId, 
-       S.name AS 'State_Name', 
+       DueDate,
+       P.Name,
+       S.StageId,
+       S.name AS 'State_Name',
        R.FirstName AS 'Recruiter_Name',
        C.Recruiter_PersonId,
        C.Owner_PersonId,
@@ -338,23 +338,23 @@ DROP PROCEDURE IF EXISTS `uspGetCandidates`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspGetCandidates`()
+CREATE PROCEDURE `uspGetCandidates`()
 BEGIN
 
- SELECT CandidateId, 
-       C.FirstName, 
-       C.LastName, 
-       TagLine, 
-       Notes, 
-       JobLink, 
+ SELECT CandidateId,
+       C.FirstName,
+       C.LastName,
+       TagLine,
+       Notes,
+       JobLink,
        C.EmailAddress,
        C.Recruiter_PersonId,
-       C.Owner_PersonId, 
+       C.Owner_PersonId,
        LastModified,
        DueDate,
-       P.Name, 
-       S.StageId AS 'State_Id', 
-       S.name AS 'State_Name', 
+       P.Name,
+       S.StageId AS 'State_Id',
+       S.name AS 'State_Name',
        R.FirstName AS 'Recruiter_Name',
        C.Recruiter_PersonId,
        C.Owner_PersonId,
@@ -371,7 +371,7 @@ DELIMITER ;
 DROP PROCEDURE IF EXISTS `uspGetStates`;
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspGetStates`()
+CREATE PROCEDURE `uspGetStates`()
 BEGIN
 
  SELECT StageId, Name
@@ -384,7 +384,7 @@ DROP PROCEDURE IF EXISTS `uspGetRecruiters`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspGetRecruiters`()
+CREATE PROCEDURE `uspGetRecruiters`()
 BEGIN
 
  SELECT PersonId, FirstName, LastName, EmailAddress, R.Name AS 'Role_Name', R.RoleId AS 'RoleId'
@@ -399,7 +399,7 @@ DROP PROCEDURE IF EXISTS `uspGetPersons`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspGetPersons`()
+CREATE PROCEDURE `uspGetPersons`()
 BEGIN
 
  SELECT PersonId, FirstName, LastName, EmailAddress, R.Name AS 'Role_Name', R.RoleId AS 'RoleId'
@@ -413,20 +413,20 @@ DROP PROCEDURE IF EXISTS `uspGetPositions`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspGetPositions`()
+CREATE PROCEDURE `uspGetPositions`()
 BEGIN
 
-       SELECT `position`.`PositionId`,
+       SELECT `Position`.`PositionId`,
 
-    `position`.`Name`,
+    `Position`.`Name`,
 
-    `position`.`Description`,
+    `Position`.`Description`,
 
-    `position`.`DatePosted`,
+    `Position`.`DatePosted`,
 
-    `position`.`JobLink`
+    `Position`.`JobLink`
 
-FROM `hpcloudrecruiting`.`position`;
+FROM Position;
 
 END ;;
 
@@ -436,7 +436,7 @@ DROP PROCEDURE IF EXISTS `uspInsertCandidate`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspInsertCandidate`(
+CREATE PROCEDURE `uspInsertCandidate`(
         IN  pFirstName                    VARCHAR(2500)   ,
         IN  pLastName                     VARCHAR(2500)   ,
         IN  pEmailAddress                 VARCHAR(2500)   ,
@@ -476,18 +476,18 @@ BEGIN
            CURDATE() + INTERVAL 2 DAY
          ) ;
 
-SELECT CandidateId, 
-       C.FirstName, 
-       C.LastName, 
-       TagLine, 
-       Notes, 
-       JobLink, 
-       C.EmailAddress, 
+SELECT CandidateId,
+       C.FirstName,
+       C.LastName,
+       TagLine,
+       Notes,
+       JobLink,
+       C.EmailAddress,
        LastModified,
-       DueDate, 
-       P.Name, 
-       S.StageId, 
-       S.name AS 'State_Name', 
+       DueDate,
+       P.Name,
+       S.StageId,
+       S.name AS 'State_Name',
        R.FirstName AS 'Recruiter_Name',
        C.Recruiter_PersonId,
        C.Owner_PersonId,
@@ -507,7 +507,7 @@ DROP PROCEDURE IF EXISTS `uspInsertPosition`;
 
 DELIMITER ;;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `uspInsertPosition`(
+CREATE PROCEDURE `uspInsertPosition`(
         IN  pName                    VARCHAR(2500)  ,
         IN  pDescription             VARCHAR(2500)  ,
         IN  pJobLink                 VARCHAR(100)
