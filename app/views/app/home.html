@@ -2,7 +2,7 @@
 </div>
 <!-- Yo: Don't think you want to nest containers like this- layout is wonky because of it
 TODO: Rewrite with either floats or columns, not both -->
-<div class="container col-sm-8 pull-left">
+<div class="container col-sm-6 pull-left">
   <% candidates.forEach(function(state){ %>
     <div class="row container state" input_id="<%= state.id %>">
 
@@ -32,7 +32,7 @@ TODO: Rewrite with either floats or columns, not both -->
   <%})%>
 </div>
 
-<div class="col-sm-4 pull-right" style="margin-top:30px">
+<div class="col-sm-5 pull-right" style="margin-top:30px">
   <div class="row col-sm-12">
     <div class="panel panel-default">
       <div class="panel-heading">Filter by:</div>
@@ -41,7 +41,7 @@ TODO: Rewrite with either floats or columns, not both -->
           <span style="margin-right:10px">Recruiter: </span>
           <div class="btn-group">
               <button id="recruit_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown">All <span class="caret"></span></button>
-              
+
               <ul id="recruit_list" class="dropdown-menu" style="cursor:pointer">
                 <li input_id="all" name="all" selected><a>All</a></li>
                 <% recruiters.forEach(function(recruiter){ %>
@@ -95,7 +95,7 @@ TODO: Rewrite with either floats or columns, not both -->
       </div>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default" style="display:none">
       <div class="panel-heading">Historical (All)</div>
       <div class="panel-body">
         <div class="loading" id="funnel_target_all">
@@ -109,7 +109,7 @@ TODO: Rewrite with either floats or columns, not both -->
       </div>
     </div>
 
-    <div class="panel panel-default">
+    <div class="panel panel-default" style="display:none">
       <div class="panel-heading">Historical (7-Day)</div>
       <div class="panel-body">
         <div class="loading" id="funnel_target_seven">
@@ -120,6 +120,16 @@ TODO: Rewrite with either floats or columns, not both -->
               </table>
             </div>
         </div>
+      </div>
+    </div>
+
+    <div class="container col-md-12">
+      <div id="funnelChart">
+      </div>
+    </div>
+
+    <div class="container col-md-12">
+      <div id="funnelChart7Days">
       </div>
     </div>
 
@@ -169,7 +179,7 @@ TODO: Rewrite with either floats or columns, not both -->
           <label for="stage_btn" class="col-sm-4 control-label">Change stage: </label>
           <div class="btn-group">
               <button id="stage_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
-              
+
               <ul id="state_list" class="dropdown-menu">
                 <% all_states.forEach(function(state){ %>
                 <li input_id="<%= state.StageId %>" name="<%= state.Name %>"><a><%= state.Name %></a></li>
@@ -184,7 +194,7 @@ TODO: Rewrite with either floats or columns, not both -->
           <label for="owner_change_btn" class="col-sm-4 control-label">Change owner: </label>
           <div class="btn-group">
               <button id="owner_change_btn" type="button" class="btn btn-default dropdown-toggle form-control col-sm-8" data-toggle="dropdown"><span class="caret"></span></button>
-              
+
               <ul id="owner_change_list" class="dropdown-menu">
                 <% persons.forEach(function(person){ %>
                 <li input_id="<%= person.PersonId %>" name="<%= person.PersonId %>"><a><%= person.FirstName + " " + person.LastName %></a></li>
@@ -230,7 +240,7 @@ $(function () {
   //Let's load the funnels on page load- we'll likely need UI for loading
   $("#funnel_target_all").ready(getFunnelStats(getUrlVars()["rec"], getUrlVars()["own"]));
 
-  //Expand and hide notes 
+  //Expand and hide notes
   $(".noteslink").click(function(e){
     $(".note_text_area[input_id='"+$(this).attr("input_id")+"']").toggleClass("hidden");
   });
@@ -252,7 +262,7 @@ $(function () {
     //Populate state list selected option
     var name = $("#state_list").find("li[input_id='"+old_state_id+"']").text();
     $("#stage_btn").html(name + " <span class='caret'></span>");
-    
+
     //Populate owner list options dropdown
     var old_owner_id = $(this).closest(".candidateRow").attr("owner");
     var owner = $("#owner_change_list").find("li[name='"+old_owner_id+"']").text();
@@ -306,4 +316,5 @@ $(function () {
   });
 
 });
+
 </script>
