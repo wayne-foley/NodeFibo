@@ -1,13 +1,14 @@
 applications:
-- name: CandidateTrack
+- name: hpcloudrecruit
   mem: 256M
   instances: 1
   services:
-    candidate-db:
+    hpcloudrecruit-db:
       type: mysql
   stackato:
     hooks:
       post-staging:
+         - dbshell < setup/createdb.sql
     ignores:
     - .git
     - .venv

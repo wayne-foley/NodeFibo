@@ -65,7 +65,7 @@ var MySqlStore = module.exports = klass(function () {
 
     if(process.env.STACKATO_SERVICES) {
       var connection = JSON.parse(process.env.STACKATO_SERVICES);
-      var dbConnection =  connection['hpcloudrecruiting-db'];
+      var dbConnection =  connection['hpcloudrecruit-db'];
       return {
         host: dbConnection.host,
         port : dbConnection.port,
@@ -78,8 +78,8 @@ var MySqlStore = module.exports = klass(function () {
       return {
         host : 'localhost',
         port : 3306,
-        user : 'tracker',
-        password: 'password',
+        user : 'helionci',
+        password: 'fairgate',
         database : 'hpcloudrecruiting'
       };
     }
