@@ -1,7 +1,6 @@
 var BaseRes = require('./base_res')
   , _ = require('underscore')
   , CandidateStore = require('../sdk/sqlcandidatestore.js')
-  , KeenStore = require('../sdk/keenstore.js')
   , csv = require('fast-csv')
   , fs = require('fs');
 
@@ -61,14 +60,10 @@ var CandidateRest = module.exports = BaseRes.extend({
 
   funnelStats : function (req,res) {
     var rec = req.body['Recruiter_PersonId'];
-    var keenStore = new KeenStore();
-    keenStore.getOverallStageFunnel(rec, function(data) {
-      var overallStats = data;
-      keenStore.getWeeklyStageFunnel(rec, function(data) {
-        var weeklyStats = data;
-        res.send({ overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
-      });
-    });
+    //Replacing analytics call with sample data
+    var overallStats = [10, 6, 2, 1, 0];
+    var weeklyStats = [100, 60, 33, 50, 0];
+    res.send({ overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
   },
 
   showCandidateAdd : function (req, res) {
