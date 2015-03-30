@@ -7,19 +7,20 @@ var BaseRes = require('./base_res')
 
 var CandidateRest = module.exports = BaseRes.extend({
   route: function (app) {
-    app.get('/', this.ensureAuthenticated, _.bind(this.home, this));
+    app.get('/',  _.bind(this.home, this));
     app.get('/login', _.bind(this.login, this));
+    //Note: To add auth back- add "this.ensureAuthenticated,"" as parameter
     //app.post('/load', this.ensureAuthenticated, _.bind(this.load, this));
 	  app.post('/load', _.bind(this.load, this));
-	  app.get('/import', this.ensureAuthenticated, _.bind(this.upload, this));
-    app.get('/candidate/add', this.ensureAuthenticated, _.bind(this.showCandidateAdd, this));
-    app.post('/candidate/add', this.ensureAuthenticated, _.bind(this.addCandidate, this));
-    app.post('/candidate/changestate', this.ensureAuthenticated, _.bind(this.changeState, this));
-    app.post('/positions/add', this.ensureAuthenticated, _.bind(this.addNewPosition, this));
-    app.post('/candidate/changeowner',  this.ensureAuthenticated, _.bind(this.changeOwner, this));
-    app.post('/candidate/changeduedate', this.ensureAuthenticated,  _.bind(this.changeDueDate, this));
-    app.post('/candidate/changenote', this.ensureAuthenticated, _.bind(this.changeNote, this));
-    app.post('/funnelStats', this.ensureAuthenticated, _.bind(this.funnelStats, this));
+	  app.get('/import',  _.bind(this.upload, this));
+    app.get('/candidate/add',  _.bind(this.showCandidateAdd, this));
+    app.post('/candidate/add',  _.bind(this.addCandidate, this));
+    app.post('/candidate/changestate', _.bind(this.changeState, this));
+    app.post('/positions/add',  _.bind(this.addNewPosition, this));
+    app.post('/candidate/changeowner',   _.bind(this.changeOwner, this));
+    app.post('/candidate/changeduedate',   _.bind(this.changeDueDate, this));
+    app.post('/candidate/changenote',  _.bind(this.changeNote, this));
+    app.post('/funnelStats',  _.bind(this.funnelStats, this));
   },
 
 
