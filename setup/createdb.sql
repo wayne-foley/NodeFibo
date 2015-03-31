@@ -52,7 +52,7 @@ CREATE TABLE `Candidate` (
 
 LOCK TABLES `Candidate` WRITE;
 /*!40000 ALTER TABLE `Candidate` DISABLE KEYS */;
-INSERT INTO `Candidate` VALUES (1,'Bob','Peterson','Very talented UX designer','bob_peterson@hp.com',1,1,1,1,CURDATE() + INTERVAL 12 DAY,CURDATE(), 'The best in the biz');
+INSERT INTO `Candidate` VALUES (1,'Bob','Peterson','Very talented UX designer','bob_peterson@hp.com',1,1,1,1,CURDATE() + INTERVAL 12 DAY,NULL, 'The best in the biz');
 /*!40000 ALTER TABLE `Candidate` ENABLE KEYS */;
 UNLOCK TABLES;
 

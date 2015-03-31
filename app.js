@@ -20,8 +20,12 @@ ejs.filters.formatDueDateColor = function(date){
     }
 
   }
-
 }
+ejs.filters.formatBar = function(candidates, color){
+  return 33;
+}
+
+
 //console.log(ejs.filters.formatDueDate);
 
 var fs = require('fs')

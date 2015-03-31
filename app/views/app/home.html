@@ -79,14 +79,14 @@ TODO: Rewrite with either floats or columns, not both -->
               </div>
               <div class="col-sm-5">
                   <div class="progress">
-                    <div class="progress-bar progress-bar-success" style="width: 35%">
-                      <span class="sr-only">35% Complete (success)</span>
+                    <div class="progress-bar progress-bar-success" style="width: <%=: state.candidates | formatBar:'green' %>%">
+                      <span class="sr-only"><%=: state.candidates | formatBar:'green' %>% Complete (success)</span>
                     </div>
-                    <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%">
-                      <span class="sr-only">20% Complete (warning)</span>
+                    <div class="progress-bar progress-bar-warning progress-bar-striped" style="width: <%=: state.candidates | formatBar:'yellow' %>%">
+                      <span class="sr-only"><%=: state.candidates | formatBar:'green' %>% Complete (warning)</span>
                     </div>
-                    <div class="progress-bar progress-bar-danger" style="width: 45%">
-                      <span class="sr-only">10% Complete (danger)</span>
+                    <div class="progress-bar progress-bar-danger" style="width: <%=: state.candidates | formatBar:'red' %>%">
+                      <span class="sr-only"><%=: state.candidates | formatBar:'green' %>% Complete (danger)</span>
                     </div>
                   </div>
               </div>
