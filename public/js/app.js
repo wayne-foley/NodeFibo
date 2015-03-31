@@ -28,7 +28,6 @@ function getFunnelStats(rec, own){
     Owner_PersonId : own,
    })
     .done(function(results) {
-      console.log(results);
       var seriesdata = [];
       var sevendayseries = [];
       var stages = ["Lead", "Phone Screen", "Interview", "Offer", "Accepted"];
@@ -53,7 +52,7 @@ function getFunnelStats(rec, own){
           stageName += "("+Math.round(results.weeklyFunnelStats.aggragate[i+1])+"%)";
         }
         datum.push(stageName);
-        datum.push(results.overallFunnelStats.funnel[i]);
+        datum.push(results.weeklyFunnelStats.funnel[i]);
         sevendayseries.push(datum);
       }
 
