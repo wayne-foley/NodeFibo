@@ -66,7 +66,7 @@ var CandidateRest = module.exports = BaseRes.extend({
     var overall= { funnel : overallStats, aggragate : overallAggregate};
     var weeklyStats = [8, 4, 3, 1, 1];
     var weeklyAggregate = [100, 50, 75, 33, 100];
-    var weekly = { funnel : overallStats, aggragate : overallAggregate};
+    var weekly = { funnel : weeklyStats, aggragate : weeklyAggregate};
     res.send({ overallFunnelStats : overall, weeklyFunnelStats : weekly});
   },
 
