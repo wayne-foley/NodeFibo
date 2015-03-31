@@ -9,14 +9,14 @@ ejs.filters.formatDueDate = function(date){
 }
 ejs.filters.formatDueDateColor = function(date){
   if(moment(date).diff(moment(), 'days') <= 0){
-    return 'progress-bar-danger"';
+    return '#d9534f';
   }
   else{
     if(moment(date).diff(moment(), 'days') > 5){
-      return 'progress-bar-success"';
+      return '#5cb85c';
     }
     else{
-      return 'progress-bar-warning';
+      return '#f0ad4e';
     }
 
   }
