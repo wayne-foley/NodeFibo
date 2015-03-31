@@ -28,6 +28,7 @@ function getFunnelStats(rec, own){
     Owner_PersonId : own,
    })
     .done(function(results) {
+      console.log(results);
       var seriesdata = [];
       var sevendayseries = [];
       var stages = ["Lead", "Phone Screen", "Interview", "Offer", "Accepted"];
