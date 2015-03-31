@@ -62,8 +62,12 @@ var CandidateRest = module.exports = BaseRes.extend({
     var rec = req.body['Recruiter_PersonId'];
     //Replacing analytics call with sample data
     var overallStats = [10, 6, 2, 1, 0];
-    var weeklyStats = [100, 60, 33, 50, 0];
-    res.send({ overallFunnelStats : overallStats, weeklyFunnelStats : weeklyStats});
+    var overallAggregate = [100, 60, 33, 50, 0];
+    var overall= { funnel : overallStats, aggragate : overallAggregate};
+    var weeklyStats = [10, 6, 2, 1, 0];
+    var weeklyAggregate = [100, 60, 33, 50, 0];
+    var weekly = { funnel : overallStats, aggragate : overallAggregate};
+    res.send({ overallFunnelStats : overall, weeklyFunnelStats : weekly});
   },
 
   showCandidateAdd : function (req, res) {
