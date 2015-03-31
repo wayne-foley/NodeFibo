@@ -22,10 +22,46 @@ ejs.filters.formatDueDateColor = function(date){
 
   }
 }
-ejs.filters.formatBar = function(candidates, color){
+ejs.filters.formatBarRed = function(candidates){
   var total = candidates.length;
   var red = 0;
+  for(var i=0; i<candidates.length; i++){
+    if(moment(ca).diff(moment(), 'days') <= 0){
+      red = red + 1;
+    }
+    else{
+     if(moment(date).diff(moment(), 'days') > 5){
+      yellow = yellow + 1;
+      }
+      else{
+        green = green + 1;
+      }
+    }
+  }
+ return Math.round(red/total)
+}
+
+ejs.filters.formatBarYellow = function(candidates){
+  var total = candidates.length;
   var yellow = 0;
+  for(var i=0; i<candidates.length; i++){
+    if(moment(ca).diff(moment(), 'days') <= 0){
+      red = red + 1;
+    }
+    else{
+     if(moment(date).diff(moment(), 'days') > 5){
+      yellow = yellow + 1;
+      }
+      else{
+        green = green + 1;
+      }
+    }
+  }
+ return Math.round(yellow/total)
+}
+
+ejs.filters.formatBarGreen = function(candidates){
+  var total = candidates.length;
   var green = 0;
   for(var i=0; i<candidates.length; i++){
     if(moment(ca).diff(moment(), 'days') <= 0){
@@ -40,19 +76,7 @@ ejs.filters.formatBar = function(candidates, color){
       }
     }
   }
-  if(color == "red"){
-    return Math.round(red/total);
-  }
-  else
-  {
-    if(color == "yellow")
-    {
-      return Math.round(yellow/total);
-    }
-    else{
-      return Math.round(green/total);
-    }
-  }
+ return Math.round(green/total)
 }
 
 
