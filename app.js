@@ -7,7 +7,22 @@ moment = require('moment');
 ejs.filters.formatDueDate = function(date){
   return moment(date).fromNow()
 }
-console.log(ejs.filters.formatDueDate);
+ejs.filters.formatDueDateColor = function(date){
+  if(moment(date).diff(moment(), 'days') <= 0){
+    return 'red';
+  }
+  else{
+    if(moment(date).diff(moment(), 'days') > 5){
+      return 'green';
+    }
+    else{
+      return 'yellow';
+    }
+
+  }
+
+}
+//console.log(ejs.filters.formatDueDate);
 
 var fs = require('fs')
   , express = require('express')
