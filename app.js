@@ -7,6 +7,7 @@ moment = require('moment');
 ejs.filters.formatDueDate = function(date){
   return moment(date).fromNow()
 }
+
 ejs.filters.formatDueDateColor = function(date){
   if(moment(date).diff(moment(), 'days') <= 0){
     return '#d9534f';
@@ -22,7 +23,36 @@ ejs.filters.formatDueDateColor = function(date){
   }
 }
 ejs.filters.formatBar = function(candidates, color){
-  return 33;
+  var total = candidates.length;
+  var red = 0;
+  var yellow = 0;
+  var green = 0;
+  for(var i=0; i<candidates.length; i++){
+    if(moment(ca).diff(moment(), 'days') <= 0){
+      red = red + 1;
+    }
+    else{
+     if(moment(date).diff(moment(), 'days') > 5){
+      yellow = yellow + 1;
+      }
+      else{
+        green = green + 1;
+      }
+    }
+  }
+  if(color == "red"){
+    return Math.round(red/total);
+  }
+  else
+  {
+    if(color == "yellow")
+    {
+      return Math.round(yellow/total);
+    }
+    else{
+      return Math.round(green/total);
+    }
+  }
 }
 
 
