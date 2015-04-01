@@ -33,14 +33,14 @@ ejs.filters.formatBarRed = function(candidates){
     }
     else{
      if(moment(candidates[i].DueDate).diff(moment(), 'days') > 5){
-      yellow = yellow + 1;
+      green = green + 1;
       }
       else{
-        green = green + 1;
+        yellow = yellow + 1;
       }
     }
   }
- return Math.round((red/total)*10);
+ return Math.round((red/total)*100);
 }
 
 ejs.filters.formatBarYellow = function(candidates){
@@ -54,14 +54,14 @@ ejs.filters.formatBarYellow = function(candidates){
     }
     else{
      if(moment(candidates[i].DueDate).diff(moment(), 'days') > 5){
-      yellow = yellow + 1;
+      green = green + 1;
       }
       else{
-        green = green + 1;
+        yellow = yellow + 1;
       }
     }
   }
- return Math.round((yellow/total)*10)
+ return Math.round((yellow/total)*100)
 }
 
 ejs.filters.formatBarGreen = function(candidates){
@@ -75,14 +75,14 @@ ejs.filters.formatBarGreen = function(candidates){
     }
     else{
      if(moment(candidates[i].DueDate).diff(moment(), 'days') > 5){
-      yellow = yellow + 1;
+      green = green + 1;
       }
       else{
-        green = green + 1;
+        yellow = yellow + 1;
       }
     }
   }
- return Math.round((green/total)*10);
+ return Math.round((green/total)*100);
 }
 
 
