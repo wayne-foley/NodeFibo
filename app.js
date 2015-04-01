@@ -40,7 +40,7 @@ ejs.filters.formatBarRed = function(candidates){
       }
     }
   }
- return Math.round(red/total)
+ return Math.round((red/total)*10);
 }
 
 ejs.filters.formatBarYellow = function(candidates){
@@ -61,7 +61,7 @@ ejs.filters.formatBarYellow = function(candidates){
       }
     }
   }
- return Math.round(yellow/total)
+ return Math.round((yellow/total)*10)
 }
 
 ejs.filters.formatBarGreen = function(candidates){
@@ -82,7 +82,7 @@ ejs.filters.formatBarGreen = function(candidates){
       }
     }
   }
- return Math.round(green/total)
+ return Math.round((green/total)*10);
 }
 
 
