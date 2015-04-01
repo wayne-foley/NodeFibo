@@ -26,11 +26,11 @@ ejs.filters.formatBarRed = function(candidates){
   var total = candidates.length;
   var red = 0;
   for(var i=0; i<candidates.length; i++){
-    if(moment(ca).diff(moment(), 'days') <= 0){
+    if(moment(candidates[i].DueDate).diff(moment(), 'days') <= 0){
       red = red + 1;
     }
     else{
-     if(moment(date).diff(moment(), 'days') > 5){
+     if(moment(candidates[i].DueDate).diff(moment(), 'days') > 5){
       yellow = yellow + 1;
       }
       else{
@@ -45,11 +45,11 @@ ejs.filters.formatBarYellow = function(candidates){
   var total = candidates.length;
   var yellow = 0;
   for(var i=0; i<candidates.length; i++){
-    if(moment(ca).diff(moment(), 'days') <= 0){
+    if(moment(candidates[i].DueDate).diff(moment(), 'days') <= 0){
       red = red + 1;
     }
     else{
-     if(moment(date).diff(moment(), 'days') > 5){
+     if(moment(candidates[i].DueDate).diff(moment(), 'days') > 5){
       yellow = yellow + 1;
       }
       else{
@@ -64,11 +64,11 @@ ejs.filters.formatBarGreen = function(candidates){
   var total = candidates.length;
   var green = 0;
   for(var i=0; i<candidates.length; i++){
-    if(moment(ca).diff(moment(), 'days') <= 0){
+    if(moment(candidates[i].DueDate).diff(moment(), 'days') <= 0){
       red = red + 1;
     }
     else{
-     if(moment(date).diff(moment(), 'days') > 5){
+     if(moment(candidates[i].DueDate).diff(moment(), 'days') > 5){
       yellow = yellow + 1;
       }
       else{
