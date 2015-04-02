@@ -20,6 +20,10 @@ var CandidateRest = module.exports = BaseRes.extend({
     app.post('/candidate/changeduedate',   _.bind(this.changeDueDate, this));
     app.post('/candidate/changenote',  _.bind(this.changeNote, this));
     app.post('/funnelStats',  _.bind(this.funnelStats, this));
+    /* fake add user */
+    app.get('/adduser',  _.bind(this.showAddUser, this));
+    app.post('/adduser',  _.bind(this.addUser, this));
+
   },
 
 
@@ -83,6 +87,29 @@ var CandidateRest = module.exports = BaseRes.extend({
         });
       });
     });
+  },
+
+  /* Hacking add user fake */
+  showAddUser : function (req, res) {
+	 var store = new CandidateStore();
+	 store.getPositions( function (err, positions) {
+	   var pos = positions;
+
+	   store.getRecruiters( function(err, recruiters) {
+	     var recs = recruiters;
+	     store.getPersons( function(err, persons) {
+	       var pers = persons;
+	       res.render('app/adduser' , {positions : pos,  recruiters : recs, owners : pers });
+	     });
+	   });
+	 });
+  },
+
+  addUser : function (req,res) {
+	 var store = new CandidateStore();
+	 store.addCandidate(req.body, function (candidate) {
+	   res.redirect('/');
+	 });
   },
 
   login: function (req, res) {

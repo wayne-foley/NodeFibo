@@ -52,7 +52,10 @@ CREATE TABLE `Candidate` (
 
 LOCK TABLES `Candidate` WRITE;
 /*!40000 ALTER TABLE `Candidate` DISABLE KEYS */;
-INSERT INTO `Candidate` VALUES (1,'Bob','Peterson','Very talented UX designer','bob_peterson@hp.com',1,1,1,1,CURDATE() + INTERVAL 12 DAY,NULL, 'The best in the biz');
+INSERT INTO `Candidate` VALUES (1,'Bob','Peterson','Very talented UX designer','bob_peterson@hp.com',1,1,1,1,CURDATE() + INTERVAL 12 DAY,1, 'The best in the biz');
+INSERT INTO `Candidate` VALUES (2,'Mary','Johnson','Star cloud dev','mary.johnson@example.com',1,1,1,1,CURDATE() + INTERVAL 12 DAY,1, 'The best in the biz');
+INSERT INTO `Candidate` VALUES (3,'John','Smith','Experienced network engineer','john.smith@example.com',1,1,1,1,CURDATE() + INTERVAL 12 DAY,2, 'The best in the biz');
+INSERT INTO `Candidate` VALUES (4,'Jane','Jones','Experienced network engineer','jane.jones@example.com',1,1,1,1,CURDATE() + INTERVAL 12 DAY,3, 'The best in the biz');
 /*!40000 ALTER TABLE `Candidate` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -108,7 +111,7 @@ CREATE TABLE `Person` (
 
 LOCK TABLES `Person` WRITE;
 /*!40000 ALTER TABLE `Person` DISABLE KEYS */;
-INSERT INTO `Person` VALUES ('Wayne','Foley','wayne.foley@hp.com',1,1),('Sam','Gazitt','sam.gazitt@hp.com',2,2);
+INSERT INTO `Person` VALUES ('Smith','Jack','jack.smith@example.com',1,1),('Doe','Joe','joe.doe@example.com',2,2);
 /*!40000 ALTER TABLE `Person` ENABLE KEYS */;
 UNLOCK TABLES;
 
